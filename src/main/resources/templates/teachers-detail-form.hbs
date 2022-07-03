@@ -1,0 +1,73 @@
+{{#partial "content"}}
+
+    <div class="side-menu">
+        <div class="brand-name">
+            <h3>E-Learning</h3>
+        </div>
+        <ul>
+            <li>
+                <a class="nav-link" href="/"><img src="images/dashboard.png" alt="" >Dashboard</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/school-detail-form"><img src="images/school.png" alt=""> Schools</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/teachers-detail-form"><img src="images/teach.png"  alt="">Teachers</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/students-detail-form"><img src="images/reading-book.png" alt="">Students</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/"><img src="images/settings.png" alt=""> Settings</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/"><img src="images/logout.png" alt="">Log Out</a>&nbsp;
+            </li>
+        </ul>
+    </div>
+    <div class="container-fluid">
+        <div class="school-form">
+            <h2 class="mb-4">TEACHER'S DETAILS</h2>
+            <form class="form" action="/teachers-detail-form/new" method="post">
+                <div class="mb-3 ">
+                    <h6>First Name:</h6>
+                    <input type="text" id="fname" placeholder="first name" name="fname" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Middle Name (optional):</h6>
+                    <input type="text" id="mname"placeholder="middle name" name="mname" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Last Name:</h6>
+                    <input type="text" id="lname" placeholder="last name" name="lname" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Email:</h6>
+                    <input type="text" id="email" placeholder="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Phone:</h6>
+                    <input type="number" id="phone" placeholder="phone" name="phone" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Address:</h6>
+                    <input type="text" id="address" placeholder="address" name="address" required>
+                </div>
+                <div class="mb-3 ">
+                    <h6>Gender:</h6>
+                    <div class="mb-3">
+                        <input type="radio" id="male" name="gender" value="male">
+                        <label for="male">Male</label><br>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Female</label><br>
+                    </div>
+                </div>
+                <button class="btn" type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+
+
+{{/partial}}
+
+{{> layout.hbs}}

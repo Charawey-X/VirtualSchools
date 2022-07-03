@@ -1,0 +1,65 @@
+{{#partial "content"}}
+
+    <div class="side-menu">
+        <div class="brand-name">
+            <h3>E-Learning</h3>
+        </div>
+        <ul>
+            <li>
+                <a class="nav-link" href="/"><img src="images/dashboard.png" alt="" >Dashboard</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/school-detail-form"><img src="images/school.png" alt=""> Schools</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/teachers-detail-form"><img src="images/teach.png"  alt="">Teachers</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/"><img src="images/reading-book.png" alt="">Students</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/"><img src="images/settings.png" alt=""> Settings</a>&nbsp;
+            </li>
+            <li>
+                <a class="nav-link" href="/"><img src="images/logout.png" alt="">Log Out</a>&nbsp;
+            </li>
+        </ul>
+    </div>
+    <div class="container-fluid">
+        <div class="school-form">
+            <h2 class="mb-4">SCHOOL DETAILS</h2>
+            <form class="form" action="/teachers-detail-form/new" method="post">
+                <div class="mb-3 ">
+                    <h6>School:</h6>
+                    <input type="text" id="school" placeholder="school name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Type of Institution:</h6>
+                    <input type="text" id="institution"placeholder="tertiary,highSchool" name="institution" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Administrator:</h6>
+                    <input type="text" id="administrator" placeholder="owner name" name="administrator" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Email:</h6>
+                    <input type="text" id="email" placeholder="owner email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <h6>School Email:</h6>
+                    <input type="text" id="SchoolEmail" placeholder="School email" name="SchoolEmail" required>
+                </div>
+                <div class="mb-3">
+                    <h6>Location:</h6>
+                    <input type="text" id="location" placeholder="location" name="location" required>
+                </div>
+
+                <button class="btn" type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+
+
+{{/partial}}
+
+{{> layout.hbs}}
