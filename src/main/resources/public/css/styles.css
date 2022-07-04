@@ -1,0 +1,269 @@
+body {
+    background: #E8D9D1;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+.card.user {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
+  margin-top: 100px;
+  margin-left: 18%;
+  margin-right: 18%;
+  width: auto;
+  font-family: 'Poppins', sans-serif;
+
+}
+.welcome{
+text-align: center;
+color:#161C5A;
+font-weight: bold;
+
+}
+.important{
+ color:#FF894F;
+}
+.logo{
+ text-align: left;
+ font-size: 40px;
+ font-weight: bold;
+ color:#161C5A;
+}
+.form-group.choice {
+text-align:center;
+}
+#submit{
+align-items:center;
+}
+.mb-3.login{
+text-align:center;
+}
+.btn.login[type=submit] {
+background-color:#FF894F;
+color: white;
+font-weight: bold;
+margin:auto;
+width:150px;
+display:block;
+align-items:center;
+justify-content:center;
+border-radius: 30px;
+
+}
+.btn.signup[type=submit]{
+background-color:#FF894F;
+color: white;
+font-weight: bold;
+margin:auto;
+width:150px;
+display:block;
+align-items:center;
+justify-content:center;
+border-radius: 30px;
+}
+.register{
+text-align: center;
+}
+
+
+
+
+
+*{
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background: #f5f6fa;
+}
+
+.wrapper .sidebar{
+    background:#161C5A;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 225px;
+    height: 100%;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+}
+.wrapper .sidebar .profile{
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.wrapper .sidebar .profile img{
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.wrapper .sidebar .profile h5{
+    color: #ffffff;
+    margin: 10px 0 5px;
+}
+
+
+
+.wrapper .sidebar ul li a{
+
+    display: block;
+    padding: 13px 30px;
+    color: rgb(241, 237, 237);
+    font-size: 16px;
+    position: relative;
+    text-decoration: none;
+
+}
+
+.wrapper .sidebar ul li a .icon{
+    color:#FF894F;
+    width: 30px;
+    display: inline-block;
+}
+.wrapper .sidebar ul li a:hover,
+.wrapper .sidebar ul li a.active{
+    color: #FF894F;
+
+    border-right: 2px solid rgb(5, 68, 104);
+}
+
+.wrapper .sidebar ul li a:hover .icon,
+.wrapper .sidebar ul li a.active .icon{
+    color: #0c7db1;
+}
+
+.wrapper .sidebar ul li a:hover:before,
+.wrapper .sidebar ul li a.active:before{
+    display: block;
+}
+
+.wrapper .section{
+    width: calc(100% - 225px);
+    margin-left: 225px;
+    transition: all 0.5s ease;
+}
+
+.wrapper .section .top_navbar{
+    background: #ffffff;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+
+}
+
+.wrapper .section .top_navbar .hamburger a{
+    font-size: 28px;
+    color: #FF894F;
+}
+
+.wrapper .section .top_navbar .hamburger a:hover{
+    color: #161C5A;
+}
+
+body.active .wrapper .sidebar{
+    left: -225px;
+}
+
+body.active .wrapper .section{
+    margin-left: 0;
+    width: 100%;
+}
+
+
+.resource-form{
+color:#161C5A;
+margin-left:30%;
+}
+input[type=text]{
+width: 80%;
+  padding: 9px 9px;
+  margin: 4px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  box-sizing: border-box;
+  color:#161C5A;
+  background:#E5E5E5;
+}
+
+input[type=file]{
+  width: 80%;
+  padding: 9px 9px;
+  margin: 4px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  box-sizing: border-box;
+  color:#161C5A;
+  background:#E5E5E5;
+}
+textarea[type=text]{
+ width: 80%;
+  padding: 9px 9px;
+  margin: 4px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  box-sizing: border-box;
+  color:#161C5A;
+  background:#E5E5E5;
+}
+
+.btn.book[type=submit]{
+  cursor: pointer;
+  background-color:#FF894F;
+  color: white;
+  font-weight: bold;
+  margin:auto;
+  width:150px;
+  display:block;
+  align-items:center;
+  justify-content:center;
+  border-radius: 30px;
+  margin-left:380px;
+
+
+
+}
+
+.resource-form{
+margin-left:50px;
+}
+
+.attendance {
+margin-top:40px;
+margin-left:50px;
+}
+
+.card.present{
+  padding:3px;
+  margin-left:50px;
+  align-items:left;
+  border-radius: 5px;
+  margin-top: 80px;
+  magin-left: 18%;
+  margin-right: 18%;
+  width: auto;
+  font-family: 'Poppins', sans-serif;
+}
+#avatar{
+text-align: left
+
+}
+.col-md-6.name{
+  display: flex;
+  align-items: center;
+}
+.col-md-3.check{
+  display: flex;
+  align-items: center;
+}

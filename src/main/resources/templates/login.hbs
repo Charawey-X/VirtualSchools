@@ -1,0 +1,82 @@
+
+{{#partial "content"}}
+
+    <div class=" container logo">
+        <p>E learning</p>
+    </div>
+
+    <div class="container">
+        <div class="card user">
+            <div class="card-body">
+                <h1 class = "welcome">Welcome <span class="important">back!</span> </h1>
+                <form action="/login" method="post">
+                    {{#if admin}}
+                        <div class="form-group choice ">
+                            <label for="type"></label>
+                            <div class="form-check-inline">
+                                <input class="form-check-input" type="radio" name="type"  value="Admin" onClick="window.location = '/admin/new';" >
+                                <label class="form-check-label" for="defaultCheck1">Admin</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="type" value="Teacher" onClick="window.location = '/login/new/teacher';" checked>
+                                <label class="form-check-label" for="defaultCheck1">Teacher</label>
+
+                            </div>
+                        </div>
+                    <br>
+                        <div class="mb-3 login  ">
+                            <input type="text" class="form-control " placeholder="Enter email" name="email" required>
+                        </div>
+                        <div class="mb-3 login ">
+                            <input type="text" class="form-control " placeholder="Password" name="password" required>
+                        </div>
+
+                        <br>
+
+
+                        <div class="form-group ">
+                            <a href="/resources/new" type="submit" class="btn btn login">Login</a>
+
+                        </div>
+                    <br>
+
+                    <p class="register">New user? &nbsp;<a href="/register/new">Register</a></p>
+
+                    {{else}}
+                        <div class="form-group choice">
+                            <label for="type"></label><br>
+                            <div class=" form-check-inline">
+                                <input class="form-check-input" type="radio" name="type"  value="Admin" onClick="window.location = '/admin/new';" checked >
+                                <label class="form-check-label" for="defaultCheck1">Admin</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="type" value="Teacher" onClick="window.location = '/login/new/teacher';" >
+                                <label class="form-check-label" for="defaultCheck1">Teacher</label>
+
+                            </div>
+                        </div>
+                        <br>
+                        <div class="mb-3 login ">
+                            <input type="text" class="form-control " placeholder="Enter email" name="email" required>
+                        </div>
+                        <div class="mb-3 login ">
+                            <input type="text" class="form-control "  placeholder="Password" name="password" required>
+                        </div>
+
+                    <br>
+                        <div class="form-group ">
+                            <a href="/resources/new" type="submit" class="btn btn login">Login</a>
+                        </div><br>
+                        <p class="register">New user? &nbsp;<a href="/register/new">Register</a></p>
+
+                    {{/if}}
+                    <br>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+{{/partial}}
+{{> layout.hbs}}
