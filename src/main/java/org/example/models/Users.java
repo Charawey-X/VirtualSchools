@@ -5,16 +5,16 @@ public class Users {
     private String name;
     private String email;
     private String password;
-    private String created_at;
-    private String updated_at;
+    private String createdat;
+    private String updatedat;
     private String role;
 
     public Users(String name, String email, String password, String created_at, String updated_at, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.createdat = created_at;
+        this.updatedat = updated_at;
         this.role = role;
     }
 
@@ -51,19 +51,19 @@ public class Users {
     }
 
     public String getCreated_at() {
-        return created_at;
+        return createdat;
     }
 
     public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+            this.createdat = created_at;
     }
 
     public String getUpdated_at() {
-        return updated_at;
+        return updatedat;
     }
 
     public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+        this.updatedat = updated_at;
     }
 
     public String getRole() {
