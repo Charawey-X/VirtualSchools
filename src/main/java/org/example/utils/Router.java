@@ -1,10 +1,13 @@
 package org.example.utils;
 
 import com.google.gson.Gson;
+import org.example.dao.StudentDao;
 import org.example.dao.TeacherDao;
 import org.example.dao.UserDao;
+import org.example.interfaces.IStudent;
 import org.example.interfaces.ITeacher;
 import org.example.interfaces.IUser;
+import org.example.models.Student;
 import org.example.models.Teacher;
 import org.example.models.Users;
 import org.sql2o.Connection;
@@ -17,6 +20,7 @@ public class Router {
     public static void run(Connection connection){
         IUser userDao = new UserDao(connection);
         ITeacher teacherDao = new TeacherDao(connection); //TODO: add teacher dao
+        IStudent studentDao = new StudentDao(connection); //TODO: add student dao
 
         //TODO: add user routes
         post("/api/v1/users/login", (req, res) -> {
@@ -99,6 +103,47 @@ public class Router {
             Teacher teacher = teacherDao.deleteTeacher(id);
             res.type("application/json");
             return gson.toJson(teacher);
+        });
+
+        //TODO: add student routes
+        post("/api/v1/students/register", (req, res) -> {
+            Gson gson = new Gson();
+            Student studentData = gson.fromJson(req.body(), Student.class);
+            Student student = studentDao.createStudent(studentData);
+            res.type("application/json");
+            return gson.toJson(student);
+        });
+
+        get("/api/v1/students/:id", (req, res) -> {
+            Gson gson = new Gson();
+            int id = Integer.parseInt(req.params(":id"));
+            Student student = studentDao.getStudent(id);
+            res.type("application/json");
+            return gson.toJson(student);
+        });
+
+        get("/api/v1/students", (req, res) -> {
+            Gson gson = new Gson();
+            List<Student> students = studentDao.getAllStudents();
+            res.type("application/json");
+            return gson.toJson(students);
+        });
+
+        patch("/api/v1/students/:id", (req, res) -> {
+            Gson gson = new Gson();
+            Student studentData = gson.fromJson(req.body(), Student.class);
+            studentData.setId(Integer.parseInt(req.params(":id")));
+            Student student = studentDao.updateStudent(studentData);
+            res.type("application/json");
+            return gson.toJson(student);
+        });
+
+        delete("/api/v1/students/:id", (req, res) -> {
+            Gson gson = new Gson();
+            int id = Integer.parseInt(req.params(":id"));
+            Student student = studentDao.deleteStudent(id);
+            res.type("application/json");
+            return gson.toJson(student);
         });
 
     }
