@@ -14,7 +14,10 @@ public class Seeder {
                             "CURRENT_TIMESTAMP, " +
                             "updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
                     .executeUpdate();
-
+            connection.createQuery("CREATE TABLE  IF NOT EXISTS " +
+                            "teachers (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL," +
+                            "subjects VARCHAR(255) NOT NULL)")
+                    .executeUpdate();
         } catch (Sql2oException e) {
             System.out.println("Error connecting to database");
         }
