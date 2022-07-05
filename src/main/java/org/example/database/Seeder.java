@@ -22,6 +22,11 @@ public class Seeder {
                             "students (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL," +
                             "school_id INTEGER NOT NULL, courses VARCHAR(255) NOT NULL)")
                     .executeUpdate();
+            connection.createQuery("CREATE TABLE  IF NOT EXISTS " +
+                            "schools (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL," +
+                            "description VARCHAR(255) NOT NULL, level VARCHAR(255) NOT NULL," +
+                            "courses VARCHAR(255) NOT NULL, teachers VARCHAR(255) NOT NULL)")
+                    .executeUpdate();
         } catch (Sql2oException e) {
             System.out.println("Error connecting to database");
         }
@@ -30,6 +35,12 @@ public class Seeder {
     public static void drop(@NotNull Connection connection) {
         try {
             connection.createQuery("DROP TABLE IF EXISTS users")
+                    .executeUpdate();
+            connection.createQuery("DROP TABLE IF EXISTS teachers")
+                    .executeUpdate();
+            connection.createQuery("DROP TABLE IF EXISTS students")
+                    .executeUpdate();
+            connection.createQuery("DROP TABLE IF EXISTS schools")
                     .executeUpdate();
 
         } catch (Sql2oException e) {
