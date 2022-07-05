@@ -1,8 +1,4 @@
-body {
-    background: #E8D9D1;
-    font-family: 'Poppins', sans-serif;
-
-}
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 .card.user {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -28,6 +24,7 @@ font-weight: bold;
  font-size: 40px;
  font-weight: bold;
  color:#161C5A;
+ font-family: 'Poppins', sans-serif;
 }
 .form-group.choice {
 text-align:center;
@@ -66,122 +63,97 @@ text-align: center;
 }
 
 
-
-
-
-*{
-    list-style: none;
-    text-decoration: none;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+body {
+  margin: 0;
 }
 
-body{
-    background: #f5f6fa;
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color:#161C5A;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  font-family: 'Poppins', sans-serif;
 }
 
-.wrapper .sidebar{
-    background:#161C5A;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 225px;
-    height: 100%;
-    padding: 20px 0;
-    transition: all 0.5s ease;
-}
-.wrapper .sidebar .profile{
-    margin-bottom: 30px;
-    text-align: center;
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+  margin-top:50px;
 }
 
-.wrapper .sidebar .profile img{
-    display: block;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 auto;
-}
-
-.wrapper .sidebar .profile h5{
-    color: #ffffff;
-    margin: 10px 0 5px;
-}
-
-
-
-.wrapper .sidebar ul li a{
-
+.sidebar a{
     display: block;
     padding: 13px 30px;
     color: rgb(241, 237, 237);
     font-size: 16px;
     position: relative;
-    text-decoration: none;
-
 }
-
-.wrapper .sidebar ul li a .icon{
-    color:#FF894F;
+.sidebar a .icon{
+    color: #FF894F;
     width: 30px;
     display: inline-block;
 }
-.wrapper .sidebar ul li a:hover,
-.wrapper .sidebar ul li a.active{
+.sidebar a:hover,
+.sidebar a.active{
     color: #FF894F;
-
     border-right: 2px solid rgb(5, 68, 104);
 }
 
-.wrapper .sidebar ul li a:hover .icon,
-.wrapper .sidebar ul li a.active .icon{
-    color: #0c7db1;
+.sidebar a:hover .icon,
+.sidebar a.active .icon{
+    color:#75cbf0;
 }
 
-.wrapper .sidebar ul li a:hover:before,
-.wrapper .sidebar ul li a.active:before{
+.sidebar a:hover:before,
+.sidebar a.active:before{
     display: block;
 }
 
-.wrapper .section{
-    width: calc(100% - 225px);
-    margin-left: 225px;
-    transition: all 0.5s ease;
+div.section {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+  font-family: 'Poppins', sans-serif;
+}
+div.section {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+  font-family: 'Poppins', sans-serif;git remote remove origin
+
 }
 
-.wrapper .section .top_navbar{
-    background: #ffffff;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    padding: 0 30px;
 
-}
-
-.wrapper .section .top_navbar .hamburger a{
-    font-size: 28px;
-    color: #FF894F;
-}
-
-.wrapper .section .top_navbar .hamburger a:hover{
-    color: #161C5A;
-}
-
-body.active .wrapper .sidebar{
-    left: -225px;
-}
-
-body.active .wrapper .section{
-    margin-left: 0;
+@media screen and (max-width: 700px) {
+  .sidebar {
     width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.section {margin-left: 0;}
 }
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+
+
 
 
 .resource-form{
 color:#161C5A;
-margin-left:30%;
+margin-top:10px;
+
 }
 input[type=text]{
 width: 80%;
@@ -229,10 +201,14 @@ textarea[type=text]{
   align-items:center;
   justify-content:center;
   border-radius: 30px;
-  margin-left:380px;
+  margin-left:400px;
 
+}
 
-
+@media screen and (max-width: 400px) {
+  .btn.book[type=submit] {
+      margin-left:100px;
+  }
 }
 
 .resource-form{
@@ -240,7 +216,7 @@ margin-left:50px;
 }
 
 .attendance {
-margin-top:40px;
+margin-top:50px;
 margin-left:50px;
 }
 
@@ -253,7 +229,6 @@ margin-left:50px;
   magin-left: 18%;
   margin-right: 18%;
   width: auto;
-  font-family: 'Poppins', sans-serif;
 }
 #avatar{
 text-align: left
@@ -267,3 +242,23 @@ text-align: left
   display: flex;
   align-items: center;
 }
+
+#cards{
+margin-top:50px;
+font-family: 'Poppins', sans-serif;
+}
+#grade{
+ width:120px;
+ border-top-style: hidden;
+ border-right-style: hidden;
+ border-left-style: hidden;
+ border-bottom-style: hidden;
+ background-color: #ffff;
+}
+
+
+
+
+
+
+

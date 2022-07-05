@@ -14,78 +14,52 @@
     </style>
 </head>
 <body>
-<div class="wrapper">
-    <!--Top menu -->
-    <div class="sidebar">
 
-        <!--profile image & text-->
-        <div class="profile">
-            <img src="/images/alex-starnes-PK_t0Lrh7MM-unsplash.jpg" alt="profile_picture">
-            <h5>Chimamanda Ngozi</h5>
-
-        </div>
-        <div>
-            <ul>
-                <li>
-                    <a href="/resources/new">
-                        <span class="icon"><i class="fa-solid fa-book"></i></span>
-                        <span class="item">Resources</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/attendance/new">
-                        <span class="icon"><i class="fa-solid fa-clipboard-user"></i></span>
-                        <span class="item">Attendance</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/logout">
-                        <span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span>
-                        <span class="item">Logout</span>
-                    </a>
-                </li>
-            </ul>
+        <div class="sidebar">
+            <h2 style="text-align: center; color:#ffcdb5; margin-top:10px;">E learning</h2>
+            <a href="/resources/new">
+                <span class="icon"><i class="fa-solid fa-book"></i></span>
+                <span class="item">Resources</span>
+            </a>
+            <a href="/attendance/new">
+                <span class="icon"><i class="fa-solid fa-clipboard-user"></i></span>
+                <span class="item">Attendance</span>
+            </a>
+            <a href="/grades/new">
+                <span class="icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                <span class="item">Grades</span>
+            </a>
+            <a href="/login/new">
+                <span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                <span class="item">Logout</span>
+            </a>
         </div>
 
+        <div class="section">
+            <div class="attendance">
+                <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-check"></i> &nbsp;Mark all as present</button> &nbsp; &nbsp;
 
-
-    </div>
-    <div class="section">
-        <div class="top_navbar">
-            <div class="hamburger">
-                <a href="#">
-                    <i class="fas fa-bars"></i>
-                </a>
+                <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-rotate-left"></i>  &nbsp;Unmark all</button>
             </div>
-        </div>
 
-        <div class="attendance">
-            <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-check"></i> &nbsp;Mark all as present</button> &nbsp; &nbsp;
 
-            <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-rotate-left"></i>  &nbsp;Unmark all</button>
-
-        </div>
-
-        <div class="students">
-            <div class="card present">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img src="/images/blank-profile-picture-g7b52e1cc3_640.png" alt="profile_picture" id="avatar" width="70px" height="70px" >
-                    </div>
-                    <div class="col-md-6 name">Upendo Bahati</div>
-                    <div class="col-md-3 check">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-                            <label class="custom-control-label" for="customSwitch1">Mark as present</label>
+            <div class="students">
+                <div class="card present">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="/images/blank-profile-picture-g7b52e1cc3_640.png" alt="profile_picture" id="avatar" width="70px" height="70px" >
+                        </div>
+                        <div class="col-md-6 name">Upendo Bahati</div>
+                        <div class="col-md-3 check">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                                <label class="custom-control-label" for="customSwitch1">Mark as present</label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
-
 
 
     </div>
