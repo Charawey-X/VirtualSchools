@@ -27,6 +27,11 @@ public class Seeder {
                             "description VARCHAR(255) NOT NULL, level VARCHAR(255) NOT NULL," +
                             "courses VARCHAR(255) NOT NULL, teachers VARCHAR(255) NOT NULL)")
                     .executeUpdate();
+            connection.createQuery("CREATE TABLE  IF NOT EXISTS " +
+                            "subjects (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL," +
+                            "description VARCHAR(255) NOT NULL, school_id INTEGER NOT NULL," +
+                            "teacher_id INTEGER NOT NULL, level_id INTEGER NOT NULL)")
+                    .executeUpdate();
         } catch (Sql2oException e) {
             System.out.println("Error connecting to database");
         }
@@ -42,7 +47,8 @@ public class Seeder {
                     .executeUpdate();
             connection.createQuery("DROP TABLE IF EXISTS schools")
                     .executeUpdate();
-
+            connection.createQuery("DROP TABLE IF EXISTS subjects")
+                    .executeUpdate();
         } catch (Sql2oException e) {
             System.out.println("Error connecting to database");
         }
