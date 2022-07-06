@@ -30,33 +30,35 @@
     </div>
     <div class="container-fluid">
         <div class="school-form">
-            <h2 class="mb-4">SCHOOL DETAILS</h2>
-            <form class="form" action="/school/new" method="post">
+            <h2 class="mb-4">CLASSES</h2>
+            <form class="form" action="/classes-form/new" method="post">
                 <div class="mb-3 ">
-                    <h6>School:</h6>
-                    <input type="text" id="school" placeholder="school name" name="name" required>
+                    <h6>Teacher's Name:</h6>
+                    <input type="text" id="tname" placeholder="teacher name" name="tname" required>
                 </div>
                 <div class="mb-3">
-                    <h6>Type of Institution:</h6>
-                    <input type="text" id="institution"placeholder="tertiary,highSchool" name="institution" required>
+                    <h6>Classes:</h6>
+                    <label class="container1">English
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container1">Kiswahili
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container1">Social Studies
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container1">Maths
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container1">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
-                <div class="mb-3">
-                    <h6>Administrator:</h6>
-                    <input type="text" id="administrator" placeholder="owner name" name="administrator" required>
-                </div>
-                <div class="mb-3">
-                    <h6>Email:</h6>
-                    <input type="text" id="email" placeholder="owner email" name="email" required>
-                </div>
-                <div class="mb-3">
-                    <h6>School Email:</h6>
-                    <input type="text" id="SchoolEmail" placeholder="School email" name="SchoolEmail" required>
-                </div>
-                <div class="mb-3">
-                    <h6>Location:</h6>
-                    <input type="text" id="location" placeholder="location" name="location" required>
-                </div>
-
                 <button class="btn" type="submit">Create</button>
             </form>
         </div>
