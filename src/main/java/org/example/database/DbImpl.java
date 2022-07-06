@@ -7,7 +7,7 @@ import org.sql2o.Sql2oException;
 public class DbImpl extends Db{
     public Connection connect() {
         try {
-            String connect = "jdbc:postgresql://localhost:5432/news";
+            String connect = "jdbc:postgresql://localhost:5432/virtual_school";
             Sql2o sql2o = new Sql2o(connect, "bill", "<cocoginger45");
             return sql2o.open();
         } catch (Sql2oException exc) {

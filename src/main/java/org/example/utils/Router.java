@@ -16,15 +16,25 @@ public class Router {
             Users userData = gson.fromJson(req.body(), Users.class);
             Users user = userDao.login(userData.getEmail(), userData.getPassword());
             res.type("application/json");
-            return gson.toJson(user);
+            if(user != null){
+                return gson.toJson(user);
+            } else {
+                res.status(401);
+                return gson.toJson("Invalid email or password");
+            }
         });
 
         post("/api/v1/users/register", (req, res) -> {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
-            Users user = userDao.register(userData);
+            if(userDao.register(userData)){
+                res.type("application/json");
+                res.status(201);
+                return gson.toJson(userData);
+            }
             res.type("application/json");
-            return gson.toJson(user);
+            res.status(400);
+            return gson.toJson("Bad Request");
         });
 
         patch("/api/v1/users/:id", (req, res) -> {
