@@ -6,12 +6,12 @@ import java.util.Objects;
 public class Student {
     private int studentId;
     private String studentName;
-    private School school;
+    private int schoolId;
     private List<Subject> courses;
 
-    public Student(String studentName, School school, List<Subject> courses) {
+    public Student(String studentName, int schoolId, List<Subject> courses) {
         this.studentName = studentName;
-        this.school = school;
+        this.schoolId = schoolId;
         this.courses = courses;
     }
 
@@ -31,12 +31,12 @@ public class Student {
         this.studentName = studentName;
     }
 
-    public School getSchool() {
-        return school;
+    public int getSchool() {
+        return schoolId;
     }
 
-    public void setSchool(School school) {
-        this.school = school;
+    public void setSchool(int schoolId) {
+        this.schoolId = schoolId;
     }
 
     public List<Subject> getCourses() {
@@ -52,7 +52,7 @@ public class Student {
         return "Student{" +
                 "studentId=" + studentId +
                 ", studentName='" + studentName + '\'' +
-                ", school=" + school +
+                ", schoolId=" + schoolId +
                 ", courses=" + courses +
                 '}';
     }
@@ -62,11 +62,11 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return studentId == student.studentId && studentName.equals(student.studentName) && school.equals(student.school) && courses.equals(student.courses);
+        return studentId == student.studentId && schoolId == student.schoolId && studentName.equals(student.studentName) && courses.equals(student.courses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, studentName, school, courses);
+        return Objects.hash(studentId, studentName, schoolId, courses);
     }
 }

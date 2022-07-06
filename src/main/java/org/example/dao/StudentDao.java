@@ -60,7 +60,7 @@ public class StudentDao implements IStudent {
         String query = "UPDATE students SET school_id = :school_id, name = :name, courses = :courses WHERE id = :id";
         try {
             connection.createQuery(query)
-                    .addParameter("school_id", student.getSchool().getId())
+                    .addParameter("school_id", student.getSchool())
                     .addParameter("name", student.getStudentName())
                     .addParameter("courses", student.getCourses())
                     .addParameter("id", student.getStudentId())

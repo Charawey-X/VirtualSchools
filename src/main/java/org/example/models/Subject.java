@@ -1,5 +1,7 @@
 package org.example.models;
 
+import org.example.enums.Level;
+
 import java.util.Objects;
 
 public class Subject {

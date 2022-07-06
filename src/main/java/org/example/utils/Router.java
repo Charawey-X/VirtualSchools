@@ -130,7 +130,7 @@ public class Router {
             Student studentData = gson.fromJson(req.body(), Student.class);
             studentData.setStudentId(Integer.parseInt(req.params(":id")));
             studentData.setStudentName(req.params(":studentName"));
-            studentData.setSchool(req.params(":school"));
+            studentData.setSchool(Integer.parseInt(req.params(":schoolId")));
             studentDao.updateStudent(studentData);
             res.type("application/json");
             return gson.toJson("Student updated");
@@ -171,7 +171,6 @@ public class Router {
         patch("/api/v1/schools/:id", (req, res) -> {
             Gson gson = new Gson();
             School schoolData = gson.fromJson(req.body(), School.class);
-            schoolData.setId(Integer.parseInt(req.params(":id")));
             schoolDao.updateSchool(schoolData);
             res.type("application/json");
             return gson.toJson("School updated");
