@@ -8,6 +8,8 @@ Download intellij for the web application part of this project.
 
 git clone https://github.com/Charawey-X/VirtualSchools.git.
 
+Build and run app on an emulator or android device
+
 ## Built With
 Andoid 
 
