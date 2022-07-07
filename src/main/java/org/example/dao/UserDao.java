@@ -34,8 +34,8 @@ public class UserDao implements IUser {
                     .bind(user)
                     .executeUpdate().getResult()>0;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Sql2oException("Error registering");
+
+            return  false;
         }
     }
 

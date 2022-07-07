@@ -1,36 +1,41 @@
 package org.example.utils;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.DataOutputStream;
-import java.net.URL;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import okhttp3.*;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
 
 public class Mailer {
     public static void sendMail(String to, String subject, String body) {
         try {
-            URL url = new URL("");
-            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("X-Server-API-Key", System.getenv("MAIL_API_KEY"));
+            List<String> toList = new ArrayList<>();
+            toList.add(to);
 
-            // Request Parameters
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("from", "virtual-school@namani.co");
-            params.put("to", new ArrayList<>().add(to));
-            params.put("subject", subject);
-            params.put("plain_body", body);
+            String jsonString = new JSONObject()
+                    .put("to", toList)
+                    .put("from", "virtual-school@namani.co")
+                    .put("subject", subject)
+                    .put("plain_body", body)
+                    .toString();
 
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(ParamStringBuilder.getParamsString(params));
-            wr.flush();
-            wr.close();
+            RequestBody jsonBody = RequestBody.create(
+                    MediaType.parse("application/json"), jsonString);
 
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
+            Request request = new Request.Builder()
+                    .url("https://postal.namani.co/api/v1/send/message")
+                    .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                    .addHeader("X-Server-API-Key", "")
+                    .post(jsonBody)
+                    .build();
+
+            Call call = new OkHttpClient().newCall(request);
+            Response response = call.execute();
+
+            System.out.println(response.body().string());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,7 +43,7 @@ public class Mailer {
         }
     }
 
-    public static String templater(){
+    public static String templater() {
         return "";
     }
 

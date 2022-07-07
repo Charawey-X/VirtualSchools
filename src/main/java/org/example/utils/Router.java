@@ -37,6 +37,7 @@ public class Router {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
             res.type("application/json");
+            Mailer.sendMail(userData.getEmail(), "Welcome", "Welcome to the API");
             if (userDao.register(userData)) {
 
                 res.status(201);
