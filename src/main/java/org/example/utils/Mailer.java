@@ -1,7 +1,5 @@
 package org.example.utils;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import okhttp3.*;
 import org.json.JSONObject;
 
@@ -28,7 +26,7 @@ public class Mailer {
             Request request = new Request.Builder()
                     .url("https://postal.namani.co/api/v1/send/message")
                     .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .addHeader("X-Server-API-Key", "")
+                    .addHeader("X-Server-API-Key", System.getenv("POSTAL_API_KEY"))
                     .post(jsonBody)
                     .build();
 
