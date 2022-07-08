@@ -15,11 +15,10 @@ public class UserDao implements IUser {
 
 
     @Override
-    public Users login(String email, String password) {
+    public Users login(String email) {
         try {
-            return connection.createQuery("SELECT * FROM users WHERE email = :email AND password = :password")
+            return connection.createQuery("SELECT * FROM users WHERE email = :email")
                     .addParameter("email", email)
-                    .addParameter("password", password)
                     .executeAndFetchFirst(Users.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,14 +27,14 @@ public class UserDao implements IUser {
     }
 
     @Override
-    public Users register(Users user) {
+    public boolean register(Users user) {
         try {
-            return connection.createQuery("INSERT INTO users (name, email, password, created_at, updated_at, role) VALUES (:name, :email, :password, :created_at, :updated_at, :role)")
+            return connection.createQuery("INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)")
                     .bind(user)
-                    .executeAndFetchFirst(Users.class);
+                    .executeUpdate().getResult()>0;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Sql2oException("Error registering");
+
+            return  false;
         }
     }
 
