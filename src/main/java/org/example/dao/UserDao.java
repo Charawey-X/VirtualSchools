@@ -5,6 +5,8 @@ import org.example.models.Users;
 import org.sql2o.Connection;
 import org.sql2o.Sql2oException;
 
+import java.util.List;
+
 public class UserDao implements IUser {
 
     private Connection connection;
@@ -47,6 +49,17 @@ public class UserDao implements IUser {
         } catch (Exception e) {
             e.printStackTrace();
             throw new Sql2oException("Error getting user");
+        }
+    }
+
+    @Override
+    public List<Users> getAllUsers() {
+        try {
+            return connection.createQuery("SELECT * FROM users")
+                    .executeAndFetch(Users.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Sql2oException("Error getting all users");
         }
     }
 

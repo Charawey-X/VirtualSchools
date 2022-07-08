@@ -16,7 +16,7 @@ public class SchoolDao implements ISchool {
 
     @Override
     public void createSchool(School school) {
-        String query = "INSERT INTO schools (name,description,level,courses,teachers) VALUES (:name,:description,:level,:courses,:teachers)";
+        String query = "INSERT INTO schools (name,description) VALUES (:name,:description)";
         try {
             int id = (int) connection.createQuery(query,true)
                     .bind(school)

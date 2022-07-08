@@ -30,25 +30,19 @@ public class Router {
 
         port(8989);
 
-//        before((request, response) -> {
-//            response.header("Access-Control-Allow-Origin", "*");
-//            response.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-//            response.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
-//
-//            // Required Authorization header for all requests
-//            if (request.headers("Authorization") == null) {
-//                halt(401, "You must send an Authorization header");
-//            }
-//
-//        });
+        before((request, response) -> {
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+            response.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+
+        });
 
         /**
+         * Users {Teachers, Students, Admins}
          * @api {Endpoints} /users/*
          */
         IUser userDao = new UserDao(connection);
-        ITeacher teacherDao = new TeacherDao(connection); //TODO: add teacher dao
-        IStudent studentDao = new StudentDao(connection); //TODO: add student dao
-        ISchool schoolDao = new SchoolDao(connection); //TODO: add school dao
+
         ISubject subjectDao = new SubjectDao(connection); //TODO: add subject dao
 
         //TODO: add user routes
@@ -72,10 +66,19 @@ public class Router {
         post("/api/v1/users/register", (req, res) -> {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
-            userData.setPassword(Hasher.hash(userData.getPassword()));
+            if (userData.getPassword() == null) {
+                String temp = Hasher.generatePassword();
+                userData.setPassword(Hasher.hash(temp));
+                Mailer.sendMail(userData.getEmail(), "Welcome to Virtual School", "Your temporary password is: " + temp);
+            } else {
+                userData.setPassword(Hasher.hash(userData.getPassword()));
+            }
+
             res.type("application/json");
             if (userDao.register(userData)) {
                 res.status(201);
+
+                //If user.role =="teacher" or "student"
                 return gson.toJson(userData);
             }
 
@@ -134,138 +137,26 @@ public class Router {
             return gson.toJson("Bad Request");
         });
 
-        //TODO: add teacher routes
-        post("/api/v1/teachers", (req, res) -> {
-            Gson gson = new Gson();
-            Teacher teacherData = gson.fromJson(req.body(), Teacher.class);
-            teacherDao.createTeacher(teacherData);
-            // Generate a random password for the student
-            String password = Hasher.generatePassword();
-
-            Users users = new Users(
-                    teacherData.getName(),
-                    teacherData.getEmail(),
-                    Hasher.hash(password),
-                    "",
-                    "",
-                    "TEACHER"
-            );
-
-            userDao.register(users);
-
-            Mailer.sendMail(
-                   teacherData.getEmail(),
-                    "Welcome to the school",
-                    "Your password is: " + password
-            );
-            res.type("application/json");
-            return gson.toJson("Teacher created");
-        });
-
-        get("/api/v1/teachers/:id", (req, res) -> {
-            Gson gson = new Gson();
-            int id = Integer.parseInt(req.params(":id"));
-            Teacher teacher = teacherDao.getTeacher(id);
-            res.type("application/json");
-            return gson.toJson(teacher);
-        });
-
-        get("/api/v1/teachers", (req, res) -> {
-            Gson gson = new Gson();
-            List<Teacher> teachers = teacherDao.getAllTeachers();
-            res.type("application/json");
-            return gson.toJson(teachers);
-        });
-
-        patch("/api/v1/teachers/:id", (req, res) -> {
-            Gson gson = new Gson();
-            Teacher teacherData = gson.fromJson(req.body(), Teacher.class);
-            teacherData.setId(Integer.parseInt(req.params(":id")));
-            teacherDao.updateTeacher(teacherData);
-            res.type("application/json");
-            return gson.toJson("Teacher updated");
-        });
-
-        delete("/api/v1/teachers/:id", (req, res) -> {
-            Gson gson = new Gson();
-            int id = Integer.parseInt(req.params(":id"));
-            teacherDao.deleteTeacher(id);
-            res.type("application/json");
-            return gson.toJson("Teacher deleted");
-        });
-
-        //TODO: add student routes
-        post("/api/v1/students", (req, res) -> {
-            Gson gson = new Gson();
-            Student studentData = gson.fromJson(req.body(), Student.class);
-            studentDao.createStudent(studentData);
-
-            // Generate a random password for the student
-            String password = Hasher.generatePassword();
-
-            Users users = new Users(
-                    studentData.getStudentName(),
-                    studentData.getEmail(),
-                    Hasher.hash(password),
-                    "",
-                    "",
-                    "STUDENT"
-            );
-
-            userDao.register(users);
-
-            Mailer.sendMail(
-                    studentData.getEmail(),
-                    "Welcome to the school",
-                    "Your password is: " + password
-            );
+        /**
+         * Schools
+         * @api {Endpoints} /schools/*
+         */
 
 
-            res.type("application/json");
-            return gson.toJson("Student created");
-        });
-
-        get("/api/v1/students/:id", (req, res) -> {
-            Gson gson = new Gson();
-            int id = Integer.parseInt(req.params(":id"));
-            Student student = studentDao.getStudent(id);
-            res.type("application/json");
-            return gson.toJson(student);
-        });
-
-        get("/api/v1/students", (req, res) -> {
-            Gson gson = new Gson();
-            List<Student> students = studentDao.getAllStudents();
-            res.type("application/json");
-            return gson.toJson(students);
-        });
-
-        patch("/api/v1/students/:id", (req, res) -> {
-            Gson gson = new Gson();
-            Student studentData = gson.fromJson(req.body(), Student.class);
-            studentData.setStudentId(Integer.parseInt(req.params(":id")));
-            studentData.setStudentName(req.params(":studentName"));
-            studentData.setSchool(Integer.parseInt(req.params(":schoolId")));
-            studentDao.updateStudent(studentData);
-            res.type("application/json");
-            return gson.toJson("Student updated");
-        });
-
-        delete("/api/v1/students/:id", (req, res) -> {
-            Gson gson = new Gson();
-            int id = Integer.parseInt(req.params(":id"));
-            studentDao.deleteStudent(id);
-            res.type("application/json");
-            return gson.toJson("Student deleted");
-        });
-
-        //TODO: add school routes
+        ISchool schoolDao = new SchoolDao(connection);
         post("/api/v1/schools", (req, res) -> {
             Gson gson = new Gson();
-            School schoolData = gson.fromJson(req.body(), School.class);
-            schoolDao.createSchool(schoolData);
-            res.type("application/json");
-            return gson.toJson("School created");
+            String token = req.headers("Authorization").split(" ")[1];
+            DecodedJWT jwt = Hasher.decodeJwt(token);
+            String accessLevel = jwt.getClaim("accessLevel").asString();
+            if(accessLevel.equals("ADMIN")) {
+                School schoolData = gson.fromJson(req.body(), School.class);
+                schoolDao.createSchool(schoolData);
+                res.type("application/json");
+                return gson.toJson("School created");
+            }
+            res.status(401);
+            return gson.toJson("Unauthorized");
         });
 
         get("/api/v1/schools/:id", (req, res) -> {
@@ -299,7 +190,11 @@ public class Router {
             return gson.toJson("School deleted");
         });
 
-        //TODO: add course routes
+
+        /**
+         * Courses
+         * @api {Endpoints} /courses/*
+         */
         post("/api/v1/courses", (req, res) -> {
             Gson gson = new Gson();
             Subject subjectData = gson.fromJson(req.body(), Subject.class);
@@ -339,6 +234,8 @@ public class Router {
             res.type("application/json");
             return gson.toJson("Course deleted");
         });
+
+
         /**
          * @api {Endpoints} /resources/*
          */
@@ -346,7 +243,10 @@ public class Router {
         get("/api/v1/resources", (req, res) -> {
             Gson gson = new Gson();
             // Get accessLevel from bearer token
-            String accessLevel = req.headers("Authorization").replace("Bearer ", "");
+            String token = req.headers("Authorization").split(" ")[1];
+            DecodedJWT jwt = Hasher.decodeJwt(token);
+            String accessLevel = jwt.getClaim("accessLevel").asString();
+
             res.type("application/json");
             List<Resources> resources = resourceDao.getAllResources(
                     accessLevel
@@ -377,8 +277,13 @@ public class Router {
 
         post("/api/v1/resources", (req, res) -> {
             Gson gson = new Gson();
+            // Get Token from header
+            String token = req.headers("Authorization").split(" ")[1];
+            // Verify token
+            DecodedJWT jwt = Hasher.decodeJwt(token);
             res.type("application/json");
             Resources resource = gson.fromJson(req.body(), Resources.class);
+            resource.setUserid(jwt.getClaim("id").asString());
             if (resourceDao.createResource(
                     resource
             )) {

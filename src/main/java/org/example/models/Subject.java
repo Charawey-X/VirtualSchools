@@ -6,16 +6,24 @@ import java.util.Objects;
 
 public class Subject {
     private int id;
-    private School school;
-    private Level level;
-    private Teacher teacher;
+    private String school;
+    private String teacher;
     private String name;
+    public String getDescription() {
+        return description;
+    }
 
-    public Subject(School school, Level level, Teacher teacher, String name) {
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String description;
+
+    public Subject(String school,  String teacher, String name, String description) {
         this.school = school;
-        this.level = level;
         this.teacher = teacher;
         this.name = name;
+        this.description = description;
     }
 
     public int getId() {
@@ -26,27 +34,20 @@ public class Subject {
         this.id = id;
     }
 
-    public School getSchool() {
+    public String getSchool() {
         return school;
     }
 
-    public void setSchool(School school) {
+    public void setSchool(String school) {
         this.school = school;
     }
 
-    public Level getLevel() {
-        return level;
-    }
 
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    public Teacher getTeacher() {
+    public String getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
 

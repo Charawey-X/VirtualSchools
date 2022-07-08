@@ -16,7 +16,7 @@ public class SubjectDao implements ISubject {
 
     @Override
     public void create(Subject subject) {
-        String query = "INSERT INTO subjects (name, description, school_id, teacher_id, level_id) VALUES (:name, :description, :school_id, :teacher_id, :level_id)";
+        String query = "INSERT INTO subjects (name, description, school, teacher) VALUES (:name, :description, :school, :teacher)";
         try{
             int id = (int) connection.createQuery(query, true)
                     .bind(subject)
