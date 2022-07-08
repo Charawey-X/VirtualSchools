@@ -19,6 +19,8 @@ import static spark.Spark.*;
 public class Router {
     public static void run(Connection connection) {
 
+        port(8989);
+
 //        before((request, response) -> {
 //            response.header("Access-Control-Allow-Origin", "*");
 //            response.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
