@@ -2,12 +2,15 @@ package org.example.utils;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
+import org.example.Main;
 import org.example.dao.*;
+import org.example.enums.Level;
 import org.example.interfaces.*;
 import org.example.models.*;
 import org.sql2o.Connection;
 
 import java.util.List;
+
 import org.example.dao.ResourceDao;
 import org.example.dao.UserDao;
 import org.example.interfaces.IResource;
@@ -132,10 +135,29 @@ public class Router {
         });
 
         //TODO: add teacher routes
-        post("/api/v1/teachers/register", (req, res) -> {
+        post("/api/v1/teachers", (req, res) -> {
             Gson gson = new Gson();
             Teacher teacherData = gson.fromJson(req.body(), Teacher.class);
             teacherDao.createTeacher(teacherData);
+            // Generate a random password for the student
+            String password = Hasher.generatePassword();
+
+            Users users = new Users(
+                    teacherData.getName(),
+                    teacherData.getEmail(),
+                    Hasher.hash(password),
+                    "",
+                    "",
+                    "TEACHER"
+            );
+
+            userDao.register(users);
+
+            Mailer.sendMail(
+                   teacherData.getEmail(),
+                    "Welcome to the school",
+                    "Your password is: " + password
+            );
             res.type("application/json");
             return gson.toJson("Teacher created");
         });
@@ -173,10 +195,32 @@ public class Router {
         });
 
         //TODO: add student routes
-        post("/api/v1/students/register", (req, res) -> {
+        post("/api/v1/students", (req, res) -> {
             Gson gson = new Gson();
             Student studentData = gson.fromJson(req.body(), Student.class);
             studentDao.createStudent(studentData);
+
+            // Generate a random password for the student
+            String password = Hasher.generatePassword();
+
+            Users users = new Users(
+                    studentData.getStudentName(),
+                    studentData.getEmail(),
+                    Hasher.hash(password),
+                    "",
+                    "",
+                    "STUDENT"
+            );
+
+            userDao.register(users);
+
+            Mailer.sendMail(
+                    studentData.getEmail(),
+                    "Welcome to the school",
+                    "Your password is: " + password
+            );
+
+
             res.type("application/json");
             return gson.toJson("Student created");
         });
@@ -216,7 +260,7 @@ public class Router {
         });
 
         //TODO: add school routes
-        post("/api/v1/schools/register", (req, res) -> {
+        post("/api/v1/schools", (req, res) -> {
             Gson gson = new Gson();
             School schoolData = gson.fromJson(req.body(), School.class);
             schoolDao.createSchool(schoolData);
@@ -256,7 +300,7 @@ public class Router {
         });
 
         //TODO: add course routes
-        post("/api/v1/courses/register", (req, res) -> {
+        post("/api/v1/courses", (req, res) -> {
             Gson gson = new Gson();
             Subject subjectData = gson.fromJson(req.body(), Subject.class);
             subjectDao.create(subjectData);

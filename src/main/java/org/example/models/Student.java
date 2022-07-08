@@ -6,14 +6,34 @@ import java.util.Objects;
 public class Student {
     private int studentId;
     private String studentName;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(int schoolId) {
+        this.schoolId = schoolId;
+    }
+
+    private String email;
     private int schoolId;
     private List<Subject> courses;
 
-    public Student(String studentName, int schoolId, List<Subject> courses) {
+    public Student(String studentName, String email, int schoolId, List<Subject> courses) {
         this.studentName = studentName;
         this.schoolId = schoolId;
         this.courses = courses;
+        this.email = email;
     }
+
 
     public int getStudentId() {
         return studentId;

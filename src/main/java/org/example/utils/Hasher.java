@@ -5,21 +5,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.example.models.Users;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
 import java.security.SecureRandom;
-import java.security.spec.KeySpec;
 import java.util.Date;
-
-import static javax.crypto.Cipher.SECRET_KEY;
 
 public class Hasher {
     public static Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(32, 64, 1, 15 * 1024, 2);
@@ -45,6 +35,7 @@ public class Hasher {
                     .withExpiresAt(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 365)))
                     .withClaim("email", user.getEmail())
                     .withClaim("id", user.getId())
+                    .withClaim("accessLevel", user.getRole())
                     .withClaim("sub", "user")
                     .sign(algorithm);
             return token;
@@ -61,6 +52,16 @@ public class Hasher {
                 .build()
                 .verify(token);
         return jwt;
+    }
+
+    public static String generatePassword(){
+        // Generate a random password
+        String password = "";
+        SecureRandom random = new SecureRandom();
+        for (int i = 0; i < 8; i++) {
+            password += random.nextInt(10);
+        }
+        return password;
     }
 
 }

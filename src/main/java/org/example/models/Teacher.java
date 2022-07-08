@@ -9,7 +9,17 @@ public class Teacher {
     private String name;
     private List<Subject> subjects;
 
-    public Teacher(School school, String name, List<Subject> subjects) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private  String email;
+
+    public Teacher(School school, String email, String name, List<Subject> subjects) {
         this.school = school;
         this.name = name;
         this.subjects = subjects;

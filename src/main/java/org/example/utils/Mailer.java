@@ -26,7 +26,7 @@ public class Mailer {
             Request request = new Request.Builder()
                     .url("https://postal.namani.co/api/v1/send/message")
                     .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .addHeader("X-Server-API-Key", System.getenv("POSTAL_API_KEY"))
+                    .addHeader("X-Server-API-Key", "Mlth7yiwKH0SumomqDWMMZOi")
                     .post(jsonBody)
                     .build();
 

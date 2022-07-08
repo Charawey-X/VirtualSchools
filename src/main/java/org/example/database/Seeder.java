@@ -4,9 +4,12 @@ import org.jetbrains.annotations.NotNull;
 import org.sql2o.Connection;
 import org.sql2o.Sql2oException;
 
+import java.sql.SQLException;
+
 public class Seeder {
     public static void seed(@NotNull Connection connection) {
         try {
+
             connection.createQuery("CREATE TABLE  IF NOT EXISTS " +
                             "users (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL," +
                             "email VARCHAR(255) UNIQUE NOT NULL, role VARCHAR(255) NOT NULL," +
@@ -32,8 +35,8 @@ public class Seeder {
                             "description VARCHAR(255) NOT NULL, school_id INTEGER NOT NULL," +
                             "teacher_id INTEGER NOT NULL, level_id INTEGER NOT NULL)")
                     .executeUpdate();
-        } catch (Sql2oException e) {
-            System.out.println("Error connecting to database");
+        } catch (Exception e) {
+            throw new Sql2oException("Error connecting to database", e);
         }
     }
 
