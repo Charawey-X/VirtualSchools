@@ -11,15 +11,15 @@ git clone https://github.com/Charawey-X/VirtualSchools.git.
 Build and run app on an emulator or android device
 
 ## Built With
-Andoid 
+1.Android 
 
-Gradle 
+2.Gradle 
 
-Java
+3.Java
 
-XML
+4.XML
 
-Spark
+5.Spark
 
 ## Authors
 Yvonne Charawe
