@@ -15,11 +15,10 @@ public class UserDao implements IUser {
 
 
     @Override
-    public Users login(String email, String password) {
+    public Users login(String email) {
         try {
-            return connection.createQuery("SELECT * FROM users WHERE email = :email AND password = :password")
+            return connection.createQuery("SELECT * FROM users WHERE email = :email")
                     .addParameter("email", email)
-                    .addParameter("password", password)
                     .executeAndFetchFirst(Users.class);
         } catch (Exception e) {
             e.printStackTrace();

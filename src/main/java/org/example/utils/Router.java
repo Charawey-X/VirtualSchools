@@ -1,5 +1,6 @@
 package org.example.utils;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
 import org.example.dao.ResourceDao;
 import org.example.dao.UserDao;
@@ -9,12 +10,26 @@ import org.example.models.Resources;
 import org.example.models.Users;
 import org.sql2o.Connection;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static spark.Spark.*;
 
 public class Router {
     public static void run(Connection connection) {
+
+//        before((request, response) -> {
+//            response.header("Access-Control-Allow-Origin", "*");
+//            response.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+//            response.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+//
+//            // Required Authorization header for all requests
+//            if (request.headers("Authorization") == null) {
+//                halt(401, "You must send an Authorization header");
+//            }
+//
+//        });
 
         /**
          * @api {Endpoints} /users/*
@@ -23,10 +38,14 @@ public class Router {
         post("/api/v1/users/login", (req, res) -> {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
-            Users user = userDao.login(userData.getEmail(), userData.getPassword());
+            Users user = userDao.login(userData.getEmail());
             res.type("application/json");
-            if (user != null) {
-                return gson.toJson(user);
+            if (user != null && Hasher.verify(userData.getPassword(), user.getPassword())) {
+                String token = Hasher.createJwt(user);
+                Map<String, Object> map = new HashMap<>();
+                map.put("token", token);
+                map.put("user", user);
+                return gson.toJson(map);
             } else {
                 res.status(401);
                 return gson.toJson("Invalid email or password");
@@ -36,10 +55,9 @@ public class Router {
         post("/api/v1/users/register", (req, res) -> {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
+            userData.setPassword(Hasher.hash(userData.getPassword()));
             res.type("application/json");
-            Mailer.sendMail(userData.getEmail(), "Welcome", "Welcome to the API");
             if (userDao.register(userData)) {
-
                 res.status(201);
                 return gson.toJson(userData);
             }
@@ -49,9 +67,13 @@ public class Router {
         });
 
         patch("/api/v1/users/:id", (req, res) -> {
+            // Get token from header
+            String token = req.headers("Authorization");
+            // Verify token
+            DecodedJWT jwt = Hasher.decodeJwt(token);
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
-            userData.setId(Integer.parseInt(req.params(":id")));
+            userData.setId(jwt.getClaim("id").asInt());
             Users user = userDao.updateUser(userData);
             res.type("application/json");
             if (user != null) {
@@ -61,9 +83,15 @@ public class Router {
             return gson.toJson("Bad Request");
         });
 
-        get("/api/v1/users/:id", (req, res) -> {
+        get("/api/v1/users", (req, res) -> {
+            // Get token from header
+            String token = req.headers("Authorization").split(" ")[1];
+            // Verify token
+            DecodedJWT jwt = Hasher.decodeJwt(token);
             Gson gson = new Gson();
-            int id = Integer.parseInt(req.params(":id"));
+            int id = jwt
+                    .getClaim("id")
+                    .asInt();
             Users user = userDao.getUser(id);
             res.type("application/json");
             if (user != null) {
@@ -73,9 +101,13 @@ public class Router {
             return gson.toJson("Bad Request");
         });
 
-        delete("/api/v1/users/:id", (req, res) -> {
+        delete("/api/v1/users", (req, res) -> {
+            // Get token from header
+            String token = req.headers("Authorization");
+            // Verify token
+            DecodedJWT jwt = Hasher.decodeJwt(token);
             Gson gson = new Gson();
-            int id = Integer.parseInt(req.params(":id"));
+            int id = Integer.parseInt(jwt.getClaim("id").asString());
             Users user = userDao.deleteUser(id);
             res.type("application/json");
             if (user != null) {
