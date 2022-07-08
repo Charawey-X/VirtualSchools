@@ -11,14 +11,12 @@ import static spark.Spark.*;
 public class Main {
     public static void main(String[] args) {
         staticFileLocation("/public");
-
-
-        //home
+        port(7071);
 
         get("/",(request, response) -> {
-            Map<String,Object> model=new HashMap<String, Object>();
-            return new ModelAndView(model,"login.hbs");
+            return new ModelAndView(new HashMap(),"landingpage.hbs");
         },new HandlebarsTemplateEngine());
+
 
         //form admin
         get( "/admin/new", (request, response) -> {
