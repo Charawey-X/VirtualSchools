@@ -50,6 +50,7 @@ public class Router {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
             Users user = userDao.login(userData.getEmail());
+            System.out.println(userData.getEmail());
             res.type("application/json");
             if (user != null && Hasher.verify(userData.getPassword(), user.getPassword())) {
                 String token = Hasher.createJwt(user);
@@ -58,6 +59,7 @@ public class Router {
                 map.put("user", user);
                 return gson.toJson(map);
             } else {
+                System.out.println("User not found");
                 res.status(401);
                 return gson.toJson("Invalid email or password");
             }
@@ -77,7 +79,6 @@ public class Router {
             res.type("application/json");
             if (userDao.register(userData)) {
                 res.status(201);
-
                 //If user.role =="teacher" or "student"
                 return gson.toJson(userData);
             }
@@ -261,29 +262,31 @@ public class Router {
         get("/api/v1/resources/:id", (req, res) -> {
             Gson gson = new Gson();
             // Get accessLevel from bearer token
-            String accessLevel = req.headers("Authorization").replace("Bearer ", "");
+            String token = req.headers("Authorization").split(" ")[1];
+            DecodedJWT jwt = Hasher.decodeJwt(token);
+            String accessLevel = jwt.getClaim("accessLevel").asString();
             res.type("application/json");
             int id = Integer.parseInt(req.params(":id"));
             Resources resource = resourceDao.getResource(
                     id
             );
-
             if (resource != null && resource.getAccess().equals(accessLevel)) {
                 return gson.toJson(resource);
             }
-            res.status(404);
-            return gson.toJson("Not found");
+            res.status(401);
+            return gson.toJson("Requested resource not found or you do not have access to it");
         });
 
         post("/api/v1/resources", (req, res) -> {
             Gson gson = new Gson();
             // Get Token from header
             String token = req.headers("Authorization").split(" ")[1];
+
             // Verify token
             DecodedJWT jwt = Hasher.decodeJwt(token);
             res.type("application/json");
             Resources resource = gson.fromJson(req.body(), Resources.class);
-            resource.setUserid(jwt.getClaim("id").asString());
+            resource.setUserid(String.valueOf(jwt.getClaim("id").asInt()));
             if (resourceDao.createResource(
                     resource
             )) {
