@@ -35,6 +35,12 @@ public class Seeder {
                             "description VARCHAR(255) NOT NULL, school TEXT NOT NULL," +
                             "teacher TEXT)")
                     .executeUpdate();
+            connection.createQuery("CREATE TABLE  IF NOT EXISTS " +
+                            "attendance (id SERIAL PRIMARY KEY, userid INTEGER NOT NULL," +
+                            "date VARCHAR(255) NOT NULL, activity TEXT NOT NULL," +
+                            "resource TEXT)")
+                    .executeUpdate();
+
         } catch (Exception e) {
             throw new Sql2oException("Error creating tables", e);
         }
