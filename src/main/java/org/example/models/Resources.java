@@ -11,8 +11,20 @@ public class Resources {
     private String userid;
     private String access;
 
-    public Resources(String name, String description, String created_at, String updated_at, String url, String type, String userid, String access) {
+    public int getSubjectid() {
+        return subjectid;
+    }
+
+    public void setSubjectid(int subjectid) {
+        this.subjectid = subjectid;
+    }
+
+    private int subjectid;
+
+
+    public Resources(int subjectid, String name, String description, String created_at, String updated_at, String url, String type, String userid, String access) {
         this.name = name;
+        this.subjectid = subjectid;
         this.description = description;
         this.createdat = created_at;
         this.updatedat = updated_at;

@@ -53,8 +53,8 @@ public class ResourceDao implements IResource {
     @Override
     public boolean createResource(Resources resource) {
         try {
-            return connection.createQuery("INSERT INTO resources (name, access, description, type, url, userid) " +
-                            "VALUES (:name, :access, :description, :type, :url, :userid)")
+            return connection.createQuery("INSERT INTO resources (name, access, description, type, url, userid, subjectid) " +
+                            "VALUES (:name, :access, :description, :type, :url, :userid, :subjectid)")
                     .bind(resource)
                     .executeUpdate().getResult() > 0;
         } catch (Exception e) {

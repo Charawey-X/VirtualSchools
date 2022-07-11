@@ -9,7 +9,6 @@ import java.sql.SQLException;
 public class Seeder {
     public static void seed(@NotNull Connection connection) {
         try {
-
             connection.createQuery("CREATE TABLE  IF NOT EXISTS " +
                             "users (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL," +
                             "email VARCHAR(255) UNIQUE NOT NULL, role VARCHAR(255) NOT NULL," +
@@ -24,7 +23,7 @@ public class Seeder {
                             "type TEXT, userid Text," +
                             "access VARCHAR(255) NOT NULL, createdat TIMESTAMP DEFAULT " +
                             "CURRENT_TIMESTAMP, " +
-                            "updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
+                            "updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP, subjectid INTEGER NOT NULL)")
                     .executeUpdate();
 
             connection.createQuery("CREATE TABLE  IF NOT EXISTS " +
@@ -37,7 +36,7 @@ public class Seeder {
                             "teacher TEXT)")
                     .executeUpdate();
         } catch (Exception e) {
-            throw new Sql2oException("Error connecting to database", e);
+            throw new Sql2oException("Error creating tables", e);
         }
     }
 

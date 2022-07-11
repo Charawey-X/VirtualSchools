@@ -80,7 +80,7 @@ public class Router {
             if (userDao.register(userData)) {
                 res.status(201);
                 //If user.role =="teacher" or "student"
-                if(userData.getRole().equals("TEACHER") || userData.getRole().equals("STUDENT")){
+                if (userData.getRole().equals("TEACHER") || userData.getRole().equals("STUDENT")) {
                     Mailer.sendMail(userData.getEmail(), "Welcome to Virtual School", "Your temporary password is: " + temp);
                 }
                 return gson.toJson(userData);
@@ -90,18 +90,21 @@ public class Router {
             return gson.toJson("Bad Request");
         });
 
-        patch("/api/v1/users/:id", (req, res) -> {
+        patch("/api/v1/users", (req, res) -> {
             // Get token from header
-            String token = req.headers("Authorization");
+            String token = req.headers("Authorization").split(" ")[1];
             // Verify token
             DecodedJWT jwt = Hasher.decodeJwt(token);
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
             userData.setId(jwt.getClaim("id").asInt());
-            Users user = userDao.updateUser(userData);
+
             res.type("application/json");
-            if (user != null) {
-                return gson.toJson(user);
+            Map<String, Object> map = new HashMap<>();
+            if (userDao.updateUser(userData)) {
+                map.put("user", userData);
+                map.put("message", "User updated successfully");
+                return gson.toJson(map);
             }
             res.status(400);
             return gson.toJson("Bad Request");
@@ -116,6 +119,18 @@ public class Router {
             int id = jwt
                     .getClaim("id")
                     .asInt();
+            Users user = userDao.getUser(id);
+            res.type("application/json");
+            if (user != null) {
+                return gson.toJson(user);
+            }
+            res.status(400);
+            return gson.toJson("Bad Request");
+        });
+
+        get("/api/v1/users/:id", (req, res) -> {
+            Gson gson = new Gson();
+            int id = Integer.parseInt(req.params(":id"));
             Users user = userDao.getUser(id);
             res.type("application/json");
             if (user != null) {
@@ -152,7 +167,7 @@ public class Router {
             String token = req.headers("Authorization").split(" ")[1];
             DecodedJWT jwt = Hasher.decodeJwt(token);
             String accessLevel = jwt.getClaim("accessLevel").asString();
-            if(accessLevel.equals("ADMIN")) {
+            if (accessLevel.equals("ADMIN")) {
                 School schoolData = gson.fromJson(req.body(), School.class);
                 schoolDao.createSchool(schoolData);
                 res.type("application/json");

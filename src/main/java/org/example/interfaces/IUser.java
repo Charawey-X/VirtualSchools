@@ -11,6 +11,6 @@ public interface IUser {
     Users getUser(int id);
 
     List<Users> getAllUsers();
-    Users updateUser(Users user);
+    boolean updateUser(Users user);
     Users deleteUser(int id);
 }

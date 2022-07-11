@@ -64,11 +64,11 @@ public class UserDao implements IUser {
     }
 
     @Override
-    public Users updateUser(Users user) {
+    public boolean updateUser(Users user) {
         try {
-            return connection.createQuery("UPDATE users SET name = :name, email = :email, password = :password, created_at = :created_at, updated_at = :updated_at, role = :role WHERE id = :id")
+            return connection.createQuery("UPDATE users SET name = :name WHERE id = :id")
                     .bind(user)
-                    .executeAndFetchFirst(Users.class);
+                    .executeUpdate().getResult() > 0;
         } catch (Exception e) {
             e.printStackTrace();
             throw new Sql2oException("Error updating user");
