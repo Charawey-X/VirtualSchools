@@ -176,6 +176,17 @@ width: 80%;
   color:#161C5A;
   background:#E5E5E5;
 }
+input[type=password]{
+  width: 80%;
+    padding: 9px 9px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    box-sizing: border-box;
+    color:#161C5A;
+    background:#E5E5E5;
+  }
 
 input[type=file]{
   width: 80%;
