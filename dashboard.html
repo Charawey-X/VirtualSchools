@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/cb7cf38d2f.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -16,19 +16,19 @@
         </div>
         <ul>
             <li>
-                <a class="nav-link" href="/dashboard.html"><img src="images/dashboard.png" alt="" ><span>Dashboard</span></a>&nbsp;
+                <a class="nav-link" href="/dashboard.html"><img src="./assets/images/dashboard.png" alt="" ><span>Dashboard</span></a>&nbsp;
             </li>
             <li>
-                <a class="nav-link" href="/school-detail-form.html"><img src="images/school.png" alt=""><span>Schools</span></a>&nbsp;
+                <a class="nav-link" href="/school-detail-form.html"><img src="./assets/images/school.png" alt=""><span>Schools</span></a>&nbsp;
             </li>
             <li>
-                <a class="nav-link" href="/teachers-detail-form.html"><img src="images/teach.png" alt=""><span>Teachers</span></a>&nbsp;
+                <a class="nav-link" href="/teachers-detail-form.html"><img src="./assets/images/teach.png" alt=""><span>Teachers</span></a>&nbsp;
             </li>
             <li>
-                <a class="nav-link" href="/students-detail-form.html"><img src="images/reading-book.png" alt=""><span>Students</span></a>&nbsp;
+                <a class="nav-link" href="/students-detail-form.html"><img src="./assets/images/reading-book.png" alt=""><span>Students</span></a>&nbsp;
             </li>
             <li>
-                <a class="nav-link" href="/classes-form.html"><img src="images/classes.png" alt="" ><span>classes</span></a>&nbsp;
+                <a class="nav-link" href="/classes-form.html"><img src="./assets/images/classes.png" alt="" ><span>classes</span></a>&nbsp;
             </li>
             <a href="login.html">
                 <span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span>
@@ -45,9 +45,9 @@
                     <input type="search" id="search" placeholder="search schools..." >
                 </div>
                 <div class="user">
-                    <img src="images/notification.png" height="20" width="20" alt="">
+                    <img src="./assets/images/notification.png" height="20" width="20" alt="">
                     <div class="img-case">
-                        <img src="images/user.png" alt="">
+                        <img src="./assets/images/user.png" alt="">
     
                     </div>
                 </div>
@@ -57,28 +57,28 @@
             <div class="cards">
                 <div class="card">
                     <div class="icon-case">
-                        <img src="images/schoolBlue.png" height="30" width="30" alt="">
+                        <img src="./assets/images/schoolBlue.png" height="30" width="30" alt="">
                     </div>
                     <div class="box">
-                        <h5>12</h5>
+                        <h5 id="schools">12</h5>
                         <h6>Schools</h6>
                     </div>
                 </div>
                 <div class="card">
                     <div class="icon-case">
-                        <img src="images/reading-bookBlue.png" alt="">
+                        <img src="./assets/images/reading-bookBlue.png" alt="">
                     </div>
                     <div class="box">
-                        <h5>2700</h5>
+                        <h5 id="students">2700</h5>
                         <h6>Students</h6>
                     </div>
                 </div>
                 <div class="card">
                     <div class="icon-case">
-                        <img src="images/teachBlue.png" alt="">
+                        <img src="./assets/images/teachBlue.png" alt="">
                     </div>
                     <div class="box">
-                        <h5>300</h5>
+                        <h5 id="teachers">300</h5>
                         <h6>Teachers</h6>
                     </div>
                 </div>
@@ -129,5 +129,11 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"
     ></script>
+    <script type="module">
+       import * as App from './assets/js/App.js';
+
+       App.getUser();
+        
+    </script>
 </body>
 </html>
