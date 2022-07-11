@@ -15,20 +15,16 @@ export const checkLogin = () => {
     return;
 }
 
-export const login = (data) => {
-    axios.post(`${BaseUrl}/users/login`, {
-        ...data
+export const login = async (data) => {
+    const res = await fetch(`${BaseUrl}/users/login`, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
     })
-        .then((res) => {
-            console.log(res);
-            return res.json();
-        })
-        .then(data => {
-            if (data.status === 200) {
-                localStorage.setItem('token', data.token);
-                window.location.href = './dashboard.html';
-            }
-        }).catch(err => console.log(err));
+    console.log(res);
 }
 
 export const getUser = () => {
