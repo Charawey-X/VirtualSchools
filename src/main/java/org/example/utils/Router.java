@@ -37,10 +37,8 @@ public class Router {
     }
 
     public static void run(Connection connection) {
-
         port(8989);
-
-        options("/*",
+        options("/api/v1/*",
                 (request, response) -> {
 
                     String accessControlRequestHeaders = request
@@ -60,17 +58,7 @@ public class Router {
                     return "OK";
                 });
 
-        before((request, response) -> {
-            response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-            response.header("Access-Control-Allow-Headers", "*");
-
-        });
-
-        after((request, response) -> {
-            response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-        });
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
 
         /**
