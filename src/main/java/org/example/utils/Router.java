@@ -43,9 +43,8 @@ public class Router {
          */
         IUser userDao = new UserDao(connection);
 
-        ISubject subjectDao = new SubjectDao(connection); //TODO: add subject dao
+        ISubject subjectDao = new SubjectDao(connection);
 
-        //TODO: add user routes
         post("/api/v1/users/login", (req, res) -> {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
@@ -68,10 +67,11 @@ public class Router {
         post("/api/v1/users/register", (req, res) -> {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
+            String temp = "";
             if (userData.getPassword() == null) {
-                String temp = Hasher.generatePassword();
+                temp = Hasher.generatePassword();
                 userData.setPassword(Hasher.hash(temp));
-                Mailer.sendMail(userData.getEmail(), "Welcome to Virtual School", "Your temporary password is: " + temp);
+
             } else {
                 userData.setPassword(Hasher.hash(userData.getPassword()));
             }
@@ -80,6 +80,9 @@ public class Router {
             if (userDao.register(userData)) {
                 res.status(201);
                 //If user.role =="teacher" or "student"
+                if(userData.getRole().equals("TEACHER") || userData.getRole().equals("STUDENT")){
+                    Mailer.sendMail(userData.getEmail(), "Welcome to Virtual School", "Your temporary password is: " + temp);
+                }
                 return gson.toJson(userData);
             }
 
@@ -142,7 +145,6 @@ public class Router {
          * Schools
          * @api {Endpoints} /schools/*
          */
-
 
         ISchool schoolDao = new SchoolDao(connection);
         post("/api/v1/schools", (req, res) -> {
@@ -326,7 +328,6 @@ public class Router {
             res.status(400);
             return gson.toJson("Bad Request");
         });
-
 
     }
 }
