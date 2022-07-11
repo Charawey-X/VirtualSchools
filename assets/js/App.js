@@ -16,42 +16,29 @@ export const checkLogin = () => {
 }
 
 export const login = async (data) => {
-    // Create Axios Instance
-    // const instance = axios.create({
-    //     baseURL: BaseUrl,
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         "Access-Control-Allow-Origin": "*"
-    //     }
-    // });
-
-    // // Send Request
-    // const response = await instance.post('/users/login', data);
-
-    // console.log(response.data);
     fetch(`${BaseUrl}/users/login`, {
         method: 'POST',
-        //mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-            "Access-Control-Allow-Origin": "*"
-        },
         body: JSON.stringify(data)
-    }).then(res => res.body).then(res => {
-        console.log(res);
-    }).catch(err => console.log(err));
-
+    })
+        .then(res => res.status === 200 ? res.json() : { error: 'Invalid Credentials' })
+        .then(res => {
+            if (res.error) {
+                alert(res.error);
+                return;
+            }
+            localStorage.setItem('token', res.token);
+            localStorage.setItem('user', JSON.stringify(res.user));
+            window.location.href = './dashboard.html';
+        })
+        .catch(err => alert(err));
 }
 
 export const getUser = () => {
-    checkLogin();
+   
     const token = localStorage.getItem('token');
     if (token) {
         fetch(`${BaseUrl}/users`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-            ,
+           
             method: 'GET'
         })
             .then(res => res.json())
