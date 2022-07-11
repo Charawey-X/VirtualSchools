@@ -17,19 +17,30 @@ export const checkLogin = () => {
 
 export const login = async (data) => {
     // Create Axios Instance
-    const instance = axios.create({
-        baseURL: BaseUrl,
+    // const instance = axios.create({
+    //     baseURL: BaseUrl,
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         "Access-Control-Allow-Origin": "*"
+    //     }
+    // });
+
+    // // Send Request
+    // const response = await instance.post('/users/login', data);
+
+    // console.log(response.data);
+    fetch(`${BaseUrl}/users/login`, {
+        method: 'POST',
+        //mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json',
             "Access-Control-Allow-Origin": "*"
-        }
-    });
+        },
+        body: JSON.stringify(data)
+    }).then(res => res.body).then(res => {
+        console.log(res);
+    }).catch(err => console.log(err));
 
-    // Send Request
-    const response = await instance.post('/users/login', data);
-
-    console.log(response.data);
-    
 }
 
 export const getUser = () => {
