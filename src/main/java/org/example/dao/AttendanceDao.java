@@ -15,7 +15,7 @@ public class AttendanceDao implements IAttendance {
     }
 
     /**
-     * @param userid 
+     * @param userid
      * @param date
      * @return
      */
@@ -40,8 +40,8 @@ public class AttendanceDao implements IAttendance {
     @Override
     public boolean addAttendance(Attendance attendance) {
         try {
-            return connection.createQuery("INSERT INTO attendance (userid, date, activity) " +
-                    "VALUES (:userid, :date, :activity)")
+            return connection.createQuery("INSERT INTO attendance (userid, date, activity, resource) " +
+                    "VALUES (:userid, :date, :activity, :resource)")
                     .bind(attendance)
                     .executeUpdate().getResult() > 0;
         } catch (Exception e) {

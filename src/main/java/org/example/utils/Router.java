@@ -9,7 +9,10 @@ import org.example.interfaces.*;
 import org.example.models.*;
 import org.sql2o.Connection;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import org.example.dao.ResourceDao;
 import org.example.dao.UserDao;
@@ -19,13 +22,20 @@ import org.example.models.Resources;
 import org.example.models.Users;
 import org.sql2o.Connection;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static spark.Spark.*;
 
 public class Router {
+
+    public static void markAttendance(Connection connection, int userId,  String resource, String activity) {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        String formattedDate = formatter.format(new Date());
+        Attendance attendance = new Attendance(userId, formattedDate, activity, resource);
+        new AttendanceDao(connection).addAttendance(attendance);
+    }
+
     public static void run(Connection connection) {
 
         port(8989);
@@ -36,6 +46,7 @@ public class Router {
             response.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
 
         });
+
 
         /**
          * Users {Teachers, Students, Admins}
@@ -56,6 +67,7 @@ public class Router {
                 Map<String, Object> map = new HashMap<>();
                 map.put("token", token);
                 map.put("user", user);
+                markAttendance(connection, user.getId(), "Authorization", "User Login");
                 return gson.toJson(map);
             } else {
                 System.out.println("User not found");
@@ -98,7 +110,7 @@ public class Router {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
             userData.setId(jwt.getClaim("id").asInt());
-
+            markAttendance(connection, jwt.getClaim("id").asInt(), "User Resource", "Update User details");
             res.type("application/json");
             Map<String, Object> map = new HashMap<>();
             if (userDao.updateUser(userData)) {
@@ -120,6 +132,7 @@ public class Router {
                     .getClaim("id")
                     .asInt();
             Users user = userDao.getUser(id);
+            markAttendance(connection, user.getId(), "User Resource", "Get User Data");
             res.type("application/json");
             if (user != null) {
                 return gson.toJson(user);
@@ -339,6 +352,80 @@ public class Router {
             );
             if (response) {
                 return gson.toJson("Resource deleted");
+            }
+            res.status(400);
+            return gson.toJson("Bad Request");
+        });
+
+        /**
+         * Attendance
+         * @api {Endpoints} /attendance/*
+         */
+
+        IAttendance attendanceDao = new AttendanceDao(connection);
+
+        get("/api/v1/attendance/:date/all", (req, res) -> {
+            Gson gson = new Gson();
+            // Get accessLevel from bearer token
+            String token = req.headers("Authorization").split(" ")[1];
+            DecodedJWT jwt = Hasher.decodeJwt(token);
+            String accessLevel = jwt.getClaim("accessLevel").asString();
+            res.type("application/json");
+            if (accessLevel.equals("ADMIN") || accessLevel.equals("TEACHER")) {
+                String date = req.params(":date");
+                List<Attendance> attendance = attendanceDao.getAllAttendanceByDate(
+                        date
+                );
+                if (attendance != null || !attendance.isEmpty()) {
+                    return gson.toJson(attendance);
+                }
+                res.status(404);
+                return gson.toJson("Not found");
+            } else {
+                res.status(401);
+                return gson.toJson("You do not have access to this resource");
+            }
+        });
+
+        get("/api/v1/attendance/:date/:id", (req, res) -> {
+            Gson gson = new Gson();
+            // Get accessLevel from bearer token
+            String token = req.headers("Authorization").split(" ")[1];
+            DecodedJWT jwt = Hasher.decodeJwt(token);
+            String accessLevel = jwt.getClaim("accessLevel").asString();
+            int userID = Integer.parseInt(req.params(":id"));
+            res.type("application/json");
+            if (accessLevel.equals("ADMIN") || accessLevel.equals("TEACHER")) {
+                String date = req.params(":date");
+                Attendance attendance = attendanceDao.getAttendance(
+                        userID,
+                        date
+                );
+                if (attendance != null) {
+                    return gson.toJson(attendance);
+                }
+                res.status(404);
+                return gson.toJson("Not found");
+            } else {
+                res.status(401);
+                return gson.toJson("You do not have access to this resource");
+            }
+        });
+
+        post("/api/v1/attendance", (req, res) -> {
+            Gson gson = new Gson();
+            // Get Token from header
+            String token = req.headers("Authorization").split(" ")[1];
+            // Verify token
+            DecodedJWT jwt = Hasher.decodeJwt(token);
+            res.type("application/json");
+            Attendance attendance = gson.fromJson(req.body(), Attendance.class);
+            attendance.setUserid(jwt.getClaim("id").asInt());
+            if (attendanceDao.addAttendance(
+                    attendance
+            )) {
+                res.status(201);
+                return gson.toJson(attendance);
             }
             res.status(400);
             return gson.toJson("Bad Request");
