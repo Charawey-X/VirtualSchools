@@ -1,4 +1,4 @@
-const BaseUrl = 'http://api.vschool.namani.co/api/v1';
+const BaseUrl = 'https://api.vschool.namani.co/api/v1';
 
 export const checkLogin = () => {
     const token = localStorage.getItem('token');
@@ -16,17 +16,11 @@ export const checkLogin = () => {
 }
 
 export const login = (data) => {
-    fetch(`${BaseUrl}/users/login`, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `Bearer ''`
-        },
-        body: JSON.stringify(data)
+    axios.post(`${BaseUrl}/users/login`, {
+        ...data
     })
         .then((res) => {
-           console.log(res);
+            console.log(res);
             return res.json();
         })
         .then(data => {
