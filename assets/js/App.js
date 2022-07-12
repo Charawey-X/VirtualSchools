@@ -34,11 +34,16 @@ export const login = async (data) => {
 }
 
 export const getUser = () => {
-   
+
     const token = localStorage.getItem('token');
     if (token) {
         fetch(`${BaseUrl}/users`, {
-           
+
+            headers: {
+                'Authorization': `Bearer ${token}`
+
+            },
+
             method: 'GET'
         })
             .then(res => res.json())
@@ -121,20 +126,20 @@ export const createResource = (resource) => {
 
 
 export const getSchools = () => {
-    checkLogin();
+   
     const token = localStorage.getItem('token');
+    let data;
     if (token) {
-        fetch(`${BaseUrl}/schools`, {
+      data =   fetch(`${BaseUrl}/schools`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
             ,
             method: 'GET'
         })
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+            .then(res => res.json()).then(data => data)
     }
+    return data;
 }
 
 export const getSchool = (id) => {
