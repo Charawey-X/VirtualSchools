@@ -21,6 +21,9 @@ import org.example.interfaces.IUser;
 import org.example.models.Resources;
 import org.example.models.Users;
 import org.sql2o.Connection;
+import spark.Filter;
+import spark.Request;
+import spark.Response;
 
 import java.util.List;
 
@@ -38,15 +41,10 @@ public class Router {
     }
 
     public final static void apply() {
-        Filter filter = new Filter() {
-            @Override
-            public void handle(Request request, Response response) throws Exception {
-                corsHeaders.forEach((key, value) -> {
-                    response.header(key, value);
-                });
-            }
-        };
-        Spark.after(filter);
+        Filter filter = (request, response) -> corsHeaders.forEach((key, value) -> {
+            response.header(key, value);
+        });
+        after(filter);
     }
 
     public static void markAttendance(Connection connection, int userId, String resource, String activity) {
