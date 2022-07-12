@@ -28,6 +28,27 @@ import static spark.Spark.*;
 
 public class Router {
 
+    private static final HashMap<String, String> corsHeaders = new HashMap<String, String>();
+    
+    static {
+        corsHeaders.put("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+        corsHeaders.put("Access-Control-Allow-Origin", "*");
+        corsHeaders.put("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,");
+        corsHeaders.put("Access-Control-Allow-Credentials", "true");
+    }
+
+    public final static void apply() {
+        Filter filter = new Filter() {
+            @Override
+            public void handle(Request request, Response response) throws Exception {
+                corsHeaders.forEach((key, value) -> {
+                    response.header(key, value);
+                });
+            }
+        };
+        Spark.after(filter);
+    }
+
     public static void markAttendance(Connection connection, int userId, String resource, String activity) {
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
@@ -37,32 +58,9 @@ public class Router {
     }
 
     public static void run(Connection connection) {
-        port(8989);
-        options("/api/v1/*",
-                (request, response) -> {
-
-                    String accessControlRequestHeaders = request
-                            .headers("Access-Control-Request-Headers");
-                    if (accessControlRequestHeaders != null) {
-                        response.header("Access-Control-Allow-Headers",
-                                accessControlRequestHeaders);
-                    }
-
-                    String accessControlRequestMethod = request
-                            .headers("Access-Control-Request-Method");
-                    if (accessControlRequestMethod != null) {
-                        response.header("Access-Control-Allow-Methods",
-                                accessControlRequestMethod);
-                    }
-
-                    return "OK";
-                });
-
-        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-
-        after((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-
-
+        Router.apply();
+        port(5000);
+      
         /**
          * Users {Teachers, Students, Admins}
          * @api {Endpoints} /users/*
