@@ -60,6 +60,8 @@ public class Router {
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
+        after((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+
 
         /**
          * Users {Teachers, Students, Admins}
