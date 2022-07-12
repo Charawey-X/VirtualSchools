@@ -38,7 +38,7 @@ export const getUser = () => {
     const token = localStorage.getItem('token');
     let data;
     if (token) {
-       data = fetch(`${BaseUrl}/users`, {
+        data = fetch(`${BaseUrl}/users`, {
 
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -65,7 +65,7 @@ export const createUser = async (data) => {
                 alert(res.error);
                 return;
             }
-           
+
         })
         .catch(err => alert(err));
 }
@@ -123,7 +123,7 @@ export const getResource = (id) => {
 }
 
 export const createResource = (resource) => {
-    checkLogin();
+
     const token = localStorage.getItem('token');
     let data;
     if (token) {
@@ -198,7 +198,7 @@ export const getSubjects = () => {
     const token = localStorage.getItem('token');
     let data;
     if (token) {
-      data =   fetch(`${BaseUrl}/courses`, {
+        data = fetch(`${BaseUrl}/courses`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -206,7 +206,7 @@ export const getSubjects = () => {
             method: 'GET'
         })
             .then(res => res.json())
-            .then(data =>data)
+            .then(data => data)
             .catch(err => console.log(err));
     }
     return data;
@@ -230,7 +230,6 @@ export const getSubject = (id) => {
 }
 
 export const createSubject = (subject) => {
-    checkLogin();
     const token = localStorage.getItem('token');
     if (token) {
         fetch(`${BaseUrl}/courses`, {

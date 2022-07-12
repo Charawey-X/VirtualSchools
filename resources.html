@@ -82,18 +82,27 @@
             <form class="form">
                 <div class="mb-3 ">
                     <h6>Resource Name:</h6>
-                    <input type="text" id="school" placeholder="Course name" name="resourceName" required>
+                    <input type="text" id="resourceName" placeholder="Resource name" name="resourceName" required>
                 </div>
                 <div class="mb-3">
                     <h6>Resource Description:</h6>
-                    <textarea type="text" class="form-control" id="description" cols="30" rows="7"
-                        placeholder="Description"></textarea>
+                    <input type="text" class="form-control" id="description" placeholder="Description" />
                 </div>
                 <!-- TODO: ADD STYLE TO THIS ELEMENT -->
-                <select class="form-control" id="subjectId">
-                    <option selected>Select Subject</option>
-                    
-                </select>
+                <div class="mb-3">
+                    <select class="form-control" id="subjectId" required>
+                        <option selected>Select Subject</option>
+
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <select class="form-control" id="access" required>
+                        <option selected>Accessed By</option>
+                        <option value="STUDENT">Students</option>
+                        <option value="TEACHER">Teachers</option>
+
+                    </select>
+                </div>
                 <div class="mb-3 ">
                     <h6>Upload file:</h6>
                     <label for="fileField" class="form-label"></label>
@@ -135,8 +144,10 @@
             e.preventDefault();
             // Get the file from fileField
             const fileField = document.getElementById('fileField');
-
-            console.table(fileField);
+            const resourceName = document.getElementById('resourceName').value;
+            const description = document.getElementById('description').value;
+            const subjectId = document.getElementById('subjectId').value;
+            const access = document.getElementById('access').value;
 
             const file = fileField.files[0];
             const fileName = file.name;
@@ -148,10 +159,7 @@
             fileData.append('fileType', fileType);
             fileData.append('fileSize', fileSize);
             console.log(fileData);
-            //Convert file to buffer
-            const fileBuffer = new FileReader();
-            fileBuffer.readAsArrayBuffer(file);
-
+         
             // Upload the file to S3
             s3.upload({
                 Bucket: 'mern',
@@ -165,18 +173,21 @@
                     console.log(err);
                 } else {
                     let resource = {
-                        name: document.getElementById("resourceName").value,
-                        description: document.getElementById("description").value,
+                        name: resourceName,
+                        description: description,
                         url: "https://eu2.contabostorage.com/421c79201d584e1fadb39f8afb586827:mern/" + data.Key,
                         type: fileType,
-                        subjectId: document.getElementById("subjectId").value,
-                        access: document.getElementById("access").value
+                        subjectId: subjectId,
+                        access: access,
                     }
+                    console.log(resource);
                     createResource(resource);
                     // Clear the form
                     document.getElementById("resourceName").value = "";
                     document.getElementById("description").value = "";
                     document.getElementById("fileField").value = "";
+                    document.getElementById("subjectId").value = "";
+                    document.getElementById("access").value = "";
                 }
             });
         });
