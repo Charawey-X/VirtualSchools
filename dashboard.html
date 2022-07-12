@@ -133,6 +133,8 @@
        import * as App from './assets/js/App.js';
 
        App.getUser();
+
+       App.getSchools().then((data)=> document.getElementById('schools').innerHTML = data.length);
         
     </script>
 </body>
