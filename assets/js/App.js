@@ -36,8 +36,9 @@ export const login = async (data) => {
 export const getUser = () => {
 
     const token = localStorage.getItem('token');
+    let data;
     if (token) {
-        fetch(`${BaseUrl}/users`, {
+       data = fetch(`${BaseUrl}/users`, {
 
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -47,11 +48,10 @@ export const getUser = () => {
             method: 'GET'
         })
             .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+            .then(data => data)
         //TODO: Do something with the retrieved data
     }
-    return null;
+    return data;
 }
 
 export const getUserById = (id) => {
@@ -109,8 +109,9 @@ export const getResource = (id) => {
 export const createResource = (resource) => {
     checkLogin();
     const token = localStorage.getItem('token');
+    let data;
     if (token) {
-        fetch(`${BaseUrl}/resources`, {
+        data = fetch(`${BaseUrl}/resources`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -119,18 +120,18 @@ export const createResource = (resource) => {
             body: JSON.stringify(resource)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+            .then(data => data)
     }
+    return data;
 }
 
 
 export const getSchools = () => {
-   
+
     const token = localStorage.getItem('token');
     let data;
     if (token) {
-      data =   fetch(`${BaseUrl}/schools`, {
+        data = fetch(`${BaseUrl}/schools`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

@@ -51,6 +51,7 @@
                 <div class="user">
                     <img src="./assets/images/notification.png" height="20" width="20" alt="">
                     <div class="img-case">
+                        <span class="text-mute" id="username"></span>
                         <img src="./assets/images/user.png" alt="">
 
                     </div>
@@ -117,7 +118,7 @@
     <script type="module">
         import * as App from './assets/js/App.js';
 
-        App.getUser();
+        App.getUser().then((data)=> document.getElementById('username').innerHTML = data.name);
 
         App.getSchools().then((data) => {
             document.getElementById('schools').innerHTML = data.length
