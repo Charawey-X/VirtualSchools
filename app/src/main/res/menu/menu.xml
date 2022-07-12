@@ -8,6 +8,6 @@
         android:title="Search"
         android:icon="@drawable/menu"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always"
+        app:showAsAction="never"
         tools:ignore="HardcodedText" />
 </menu>

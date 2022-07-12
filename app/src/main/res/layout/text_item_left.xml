@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
         android:id="@+id/chat_profile_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/ic_person" />
-
     <TextView
+        android:id="@+id/show_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
-        android:id="@+id/chat_username"
         android:layout_toEndOf="@+id/chat_profile_image"
-        android:layout_centerVertical="true"
-        android:textSize="20sp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="10dp"
+        android:text="Hello"
+        android:textColor="@color/white"
         android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/darkshade"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:background="@drawable/text_background_left"
         tools:ignore="HardcodedText" />
 
 </RelativeLayout>
