@@ -34,8 +34,6 @@ loginButton.addEventListener('click', (event) => {
     App.login(data);
 });
 
-const createSchoolButton = doc
-
 
 //Create a new school
 
