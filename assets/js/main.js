@@ -34,7 +34,27 @@ loginButton.addEventListener('click', (event) => {
     App.login(data);
 });
 
-const createSchoolButton = doc
 
+//Create a new school
 
+const createSchoolButton = document.getElementById('createSchool');
 
+createSchoolButton.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    let name = document.getElementById('name').value;
+    let description = document.getElementById('description').value;
+
+    school.name = name;
+    school.description = description;
+
+    App.createSchool(school);
+    
+});
+
+// Get schools
+
+const schoolsSection = document.querySelector('.schools');
+schoolsSection.addEventListener('onload', (event) => {
+    App.getSchools();
+});
