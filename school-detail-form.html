@@ -37,7 +37,7 @@
     <div class="container-fluid">
         <div class="school-form">
             <h2 class="mb-4">SCHOOL DETAILS</h2>
-            <form class="form" action="school.html" id="schoolform" method="post">
+            <form class="form" id="schoolform"> <!--remove form action and method -->
                 <div class="mb-3 ">
                     <h6>School:</h6>
                     <input type="text" id="school" placeholder="school name" name="name" required>
@@ -63,7 +63,7 @@
                     <input type="text" id="location" placeholder="location" name="location" required>
                 </div>
 
-                <button class="btn" type="submit">Create</button>
+                <button class="btn" type="submit" id="createSchool">Create</button>
             </form>
         </div>
     </div>
