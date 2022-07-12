@@ -32,11 +32,12 @@ import static spark.Spark.*;
 public class Router {
 
     private static final HashMap<String, String> corsHeaders = new HashMap<String, String>();
-    
+
     static {
         corsHeaders.put("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
         corsHeaders.put("Access-Control-Allow-Origin", "*");
-        corsHeaders.put("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,");
+        corsHeaders.put("Access-Control-Allow-Headers",
+                "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,");
         corsHeaders.put("Access-Control-Allow-Credentials", "true");
     }
 
@@ -56,16 +57,22 @@ public class Router {
     }
 
     public static void run(Connection connection) {
+        port(8989);
+        
         apply();
-        port(5000);
-      
         /**
          * Users {Teachers, Students, Admins}
+         * 
          * @api {Endpoints} /users/*
          */
         IUser userDao = new UserDao(connection);
 
         ISubject subjectDao = new SubjectDao(connection);
+
+        options("/api/v1/*", (req, res) -> {
+            res.status(200);
+            return "OK";
+        });
 
         post("/api/v1/users/login", (req, res) -> {
             Gson gson = new Gson();
@@ -102,9 +109,10 @@ public class Router {
             res.type("application/json");
             if (userDao.register(userData)) {
                 res.status(201);
-                //If user.role =="teacher" or "student"
+                // If user.role =="teacher" or "student"
                 if (userData.getRole().equals("TEACHER") || userData.getRole().equals("STUDENT")) {
-                    Mailer.sendMail(userData.getEmail(), "Welcome to Virtual School", "Your temporary password is: " + temp);
+                    Mailer.sendMail(userData.getEmail(), "Welcome to Virtual School",
+                            "Your temporary password is: " + temp);
                 }
                 return gson.toJson(userData);
             }
@@ -182,6 +190,7 @@ public class Router {
 
         /**
          * Schools
+         * 
          * @api {Endpoints} /schools/*
          */
 
@@ -232,9 +241,9 @@ public class Router {
             return gson.toJson("School deleted");
         });
 
-
         /**
          * Courses
+         * 
          * @api {Endpoints} /courses/*
          */
         post("/api/v1/courses", (req, res) -> {
@@ -277,7 +286,6 @@ public class Router {
             return gson.toJson("Course deleted");
         });
 
-
         /**
          * @api {Endpoints} /resources/*
          */
@@ -291,8 +299,7 @@ public class Router {
 
             res.type("application/json");
             List<Resources> resources = resourceDao.getAllResources(
-                    accessLevel
-            );
+                    accessLevel);
             if (resources != null) {
                 return gson.toJson(resources);
             }
@@ -309,8 +316,7 @@ public class Router {
             res.type("application/json");
             int id = Integer.parseInt(req.params(":id"));
             Resources resource = resourceDao.getResource(
-                    id
-            );
+                    id);
             if (resource != null && resource.getAccess().equals(accessLevel)) {
                 return gson.toJson(resource);
             }
@@ -329,8 +335,7 @@ public class Router {
             Resources resource = gson.fromJson(req.body(), Resources.class);
             resource.setUserid(String.valueOf(jwt.getClaim("id").asInt()));
             if (resourceDao.createResource(
-                    resource
-            )) {
+                    resource)) {
                 res.status(201);
                 return gson.toJson(resource);
             }
@@ -345,8 +350,7 @@ public class Router {
             Resources resource = gson.fromJson(req.body(), Resources.class);
             resource.setId(id);
             if (resourceDao.updateResource(
-                    resource
-            )) {
+                    resource)) {
                 res.status(200);
                 return gson.toJson(resource);
             }
@@ -359,8 +363,7 @@ public class Router {
             res.type("application/json");
             int id = Integer.parseInt(req.params(":id"));
             boolean response = resourceDao.deleteResource(
-                    id
-            );
+                    id);
             if (response) {
                 return gson.toJson("Resource deleted");
             }
@@ -370,6 +373,7 @@ public class Router {
 
         /**
          * Attendance
+         * 
          * @api {Endpoints} /attendance/*
          */
 
@@ -379,23 +383,16 @@ public class Router {
             Gson gson = new Gson();
             // Get accessLevel from bearer token
             String token = req.headers("Authorization").split(" ")[1];
-            DecodedJWT jwt = Hasher.decodeJwt(token);
-            String accessLevel = jwt.getClaim("accessLevel").asString();
+          
             res.type("application/json");
-            if (accessLevel.equals("ADMIN") || accessLevel.equals("TEACHER")) {
-                String date = req.params(":date");
-                List<Attendance> attendance = attendanceDao.getAllAttendanceByDate(
-                        date
-                );
-                if (attendance != null || !attendance.isEmpty()) {
-                    return gson.toJson(attendance);
-                }
-                res.status(404);
-                return gson.toJson("Not found");
-            } else {
-                res.status(401);
-                return gson.toJson("You do not have access to this resource");
+            String date = req.params(":date");
+            List<Attendance> attendance = attendanceDao.getAllAttendanceByDate(
+                    date);
+            if (attendance != null) {
+                return gson.toJson(attendance);
             }
+            res.status(404);
+            return gson.toJson("Not found");
         });
 
         get("/api/v1/attendance/:date/:id", (req, res) -> {
@@ -403,24 +400,18 @@ public class Router {
             // Get accessLevel from bearer token
             String token = req.headers("Authorization").split(" ")[1];
             DecodedJWT jwt = Hasher.decodeJwt(token);
-            String accessLevel = jwt.getClaim("accessLevel").asString();
+
             int userID = Integer.parseInt(req.params(":id"));
             res.type("application/json");
-            if (accessLevel.equals("ADMIN") || accessLevel.equals("TEACHER")) {
-                String date = req.params(":date");
-                Attendance attendance = attendanceDao.getAttendance(
-                        userID,
-                        date
-                );
-                if (attendance != null) {
-                    return gson.toJson(attendance);
-                }
-                res.status(404);
-                return gson.toJson("Not found");
-            } else {
-                res.status(401);
-                return gson.toJson("You do not have access to this resource");
+            String date = req.params(":date");
+            Attendance attendance = attendanceDao.getAttendance(
+                    userID,
+                    date);
+            if (attendance != null) {
+                return gson.toJson(attendance);
             }
+            res.status(404);
+            return gson.toJson("Not found");
         });
 
         post("/api/v1/attendance", (req, res) -> {
@@ -433,8 +424,7 @@ public class Router {
             Attendance attendance = gson.fromJson(req.body(), Attendance.class);
             attendance.setUserid(jwt.getClaim("id").asInt());
             if (attendanceDao.addAttendance(
-                    attendance
-            )) {
+                    attendance)) {
                 res.status(201);
                 return gson.toJson(attendance);
             }
