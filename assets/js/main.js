@@ -34,5 +34,7 @@ loginButton.addEventListener('click', (event) => {
     App.login(data);
 });
 
+const createSchoolButton = doc
+
 
 
