@@ -5,6 +5,7 @@ import com.example.virtualschools.models.Login;
 import com.example.virtualschools.models.Resource;
 import com.example.virtualschools.models.Student;
 import com.example.virtualschools.models.StudentDetails;
+import com.example.virtualschools.models.UpdateStudent;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,7 +22,7 @@ public interface Api {
     @GET("users") Call<StudentDetails> getStudentDetails(@Header("Authorization") String token);
 
     //update student details
-    @PATCH("users") Call<StudentDetails> patchStudentDetails(@Header("Authorization") String token);
+    @PATCH("users") Call<StudentDetails> patchStudentDetails(@Header("Authorization") String token, @Body UpdateStudent updateStudent);
 
     //get courses
     @GET("courses") Call<Course> getCourses(@Header("Authorization") String token);
