@@ -1,60 +1,75 @@
 import * as App from './App.js';
 
-let resource = {
-    name: "",
-    description: "",
-    url: "",
-    type: "",
-    subjectId: 0,
-    access: ""
-}
-let school = {
-    name: "",
-    description: "",
-}
+(function (window, document, undefined) {
+    window.onload = function () {
+      
+        let school = {
+            name: "",
+            description: "",
+        }
 
-let subject = {
-    name: "",
-    description: "",
-    school: 0,
-    teacher: 0
-}
+        let subject = {
+            name: "",
+            description: "",
+            school: 0,
+            teacher: 0
+        }
 
-const loginButton = document.getElementById('loginButton');
+        //if path is login.html
+        if (window.location.pathname.includes("login.html")) {
+            const loginButton = document.getElementById('loginButton');
 
-loginButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+            loginButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                let email = document.getElementById('email').value;
+                let password = document.getElementById('password').value;
 
-    const data = {
-        email: email,
-        password: password
-    } 
-    App.login(data);
-});
+                const data = {
+                    email: email,
+                    password: password
+                }
+                App.login(data);
+            });
 
+        }
 
-//Create a new school
+        
+        if(window.location.pathname.includes("school-detail-form.html")){
+             //Create a new school
 
-const createSchoolButton = document.getElementById('createSchool');
+        const createSchoolButton = document.getElementById('createSchool');
 
-createSchoolButton.addEventListener('submit', (event) => {
-    event.preventDefault();
+        createSchoolButton.addEventListener('click', (event) => {
+            event.preventDefault();
 
-    let name = document.getElementById('name').value;
-    let description = document.getElementById('description').value;
+            let name = document.getElementById('school').value;
+            let description = document.getElementById('desc').value;
 
-    school.name = name;
-    school.description = description;
+            // Get user data from the form
+            let admin = document.getElementById('administrator').value;
+            let email = document.getElementById('email').value;
 
-    App.createSchool(school);
-    
-});
+            const user = {
+                role: "TEACHER",
+                name: admin,
+                email: email,
+            }
 
-// Get schools
+            school.name = name;
+            school.description = description;
 
-const schoolsSection = document.querySelector('.schools');
-schoolsSection.addEventListener('onload', (event) => {
-    App.getSchools();
-});
+            App.createSchool(school);
+            App.createUser(user);
+        });
+        }
+
+        if (window.location.pathname.includes("school.html")) {
+            // Get schools
+
+            const schoolsSection = document.querySelector('.schools');
+            schoolsSection.addEventListener('onload', (event) => {
+                App.getSchools();
+            });
+        }
+    }
+})(window, document, undefined);

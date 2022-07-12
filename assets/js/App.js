@@ -54,6 +54,22 @@ export const getUser = () => {
     return data;
 }
 
+export const createUser = async (data) => {
+    fetch(`${BaseUrl}/users/register`, {
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+        .then(res => res.status === 201 ? res.json() : { error: 'Invalid Credentials' })
+        .then(res => {
+            if (res.error) {
+                alert(res.error);
+                return;
+            }
+           
+        })
+        .catch(err => alert(err));
+}
+
 export const getUserById = (id) => {
     checkLogin();
     const token = localStorage.getItem('token');
@@ -161,7 +177,6 @@ export const getSchool = (id) => {
 }
 
 export const createSchool = (school) => {
-    checkLogin();
     const token = localStorage.getItem('token');
     if (token) {
         fetch(`${BaseUrl}/schools`, {
@@ -179,10 +194,11 @@ export const createSchool = (school) => {
 }
 
 export const getSubjects = () => {
-    checkLogin();
+
     const token = localStorage.getItem('token');
+    let data;
     if (token) {
-        fetch(`${BaseUrl}/courses`, {
+      data =   fetch(`${BaseUrl}/courses`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -190,9 +206,10 @@ export const getSubjects = () => {
             method: 'GET'
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data =>data)
             .catch(err => console.log(err));
     }
+    return data;
 }
 
 export const getSubject = (id) => {

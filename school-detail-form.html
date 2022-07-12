@@ -37,14 +37,14 @@
     <div class="container-fluid">
         <div class="school-form">
             <h2 class="mb-4">SCHOOL DETAILS</h2>
-            <form class="form" id="schoolform"> <!--remove form action and method -->
+            <form> 
                 <div class="mb-3 ">
                     <h6>School:</h6>
                     <input type="text" id="school" placeholder="school name" name="name" required>
                 </div>
-                <div class="mb-3">
-                    <h6>Type of Institution:</h6>
-                    <input type="text" id="institution"placeholder="tertiary,highSchool" name="institution" required>
+                <div class="mb-3 ">
+                    <h6>Decription:</h6>
+                    <input type="text" id="desc" placeholder="school name" name="name" required>
                 </div>
                 <div class="mb-3">
                     <h6>Administrator:</h6>
@@ -54,16 +54,8 @@
                     <h6>Email:</h6>
                     <input type="text" id="email" placeholder="owner email" name="email" required>
                 </div>
-                <div class="mb-3">
-                    <h6>School Email:</h6>
-                    <input type="text" id="SchoolEmail" placeholder="School email" name="SchoolEmail" required>
-                </div>
-                <div class="mb-3">
-                    <h6>Location:</h6>
-                    <input type="text" id="location" placeholder="location" name="location" required>
-                </div>
-
-                <button class="btn" type="submit" id="createSchool">Create</button>
+               
+                <button class="btn btn-primary" type="submit" id="createSchool">Create</button>
             </form>
         </div>
     </div>
@@ -73,5 +65,6 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"
     ></script>
+    <script src="./assets/js/main.js" type="module" defer></script>
 </body>
 </html>
