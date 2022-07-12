@@ -58,7 +58,7 @@ public class Router {
     }
 
     public static void run(Connection connection) {
-        Router.apply();
+        apply();
         port(5000);
       
         /**
