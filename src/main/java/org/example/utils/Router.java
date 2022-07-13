@@ -159,11 +159,39 @@ public class Router {
             res.status(400);
             return gson.toJson("Bad Request");
         });
-
+        get("/api/v1/users/list/all", (req, res) -> {
+            // Get token from header
+            Gson gson = new Gson();
+            String token = req.headers("Authorization").split(" ")[1];
+            // Verify token
+            DecodedJWT jwt = Hasher.decodeJwt(token);
+            int id = jwt
+                    .getClaim("id")
+                    .asInt();
+            List<Users> user = userDao.getAllUsers();
+            markAttendance(connection, id, "User Resource", "Get User Data");
+            res.type("application/json");
+            if (user != null) {
+                return gson.toJson(user);
+            }
+            res.status(400);
+            return gson.toJson("Bad Request");
+        });
         get("/api/v1/users/:id", (req, res) -> {
             Gson gson = new Gson();
             int id = Integer.parseInt(req.params(":id"));
             Users user = userDao.getUser(id);
+            res.type("application/json");
+            if (user != null) {
+                return gson.toJson(user);
+            }
+            res.status(400);
+            return gson.toJson("Bad Request");
+        });
+
+        get("/api/v1/users/role/:id", (req, res) -> {
+            Gson gson = new Gson();
+            List<Users> user = userDao.getUsersByRole(req.params(":id"));
             res.type("application/json");
             if (user != null) {
                 return gson.toJson(user);

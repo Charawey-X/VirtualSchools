@@ -10,6 +10,8 @@ public interface IUser {
     boolean register(Users user);
     Users getUser(int id);
 
+    List<Users> getUsersByRole(String role);
+
     List<Users> getAllUsers();
     boolean updateUser(Users user);
     Users deleteUser(int id);

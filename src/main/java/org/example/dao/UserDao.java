@@ -52,6 +52,22 @@ public class UserDao implements IUser {
         }
     }
 
+    /**
+     * @param role 
+     * @return
+     */
+    @Override
+    public List<Users> getUsersByRole(String role) {
+        try {
+            return connection.createQuery("SELECT * FROM users where role = :role")
+                    .addParameter("role", role)
+                    .executeAndFetch(Users.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Sql2oException("Error getting all users");
+        }
+    }
+
     @Override
     public List<Users> getAllUsers() {
         try {
