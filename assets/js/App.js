@@ -88,6 +88,24 @@ export const getUserById = (id) => {
     //TODO: Do something with the retrieved data
 }
 
+// Get user by role
+export const getUserByRole = (role) => {
+    const token = localStorage.getItem('token');
+    let data;
+    if (token) {
+        data = fetch(`${BaseUrl}/users/role/${role}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+            ,
+            method: 'GET'
+        })
+            .then(res => res.json())
+            .then(data => data);
+    }
+    return data;
+}
+
 export const getResources = () => {
     checkLogin();
     const token = localStorage.getItem('token');
