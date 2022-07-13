@@ -86,7 +86,7 @@ text-align: center;
 .sidebar {
   margin: 0;
   padding: 0;
-  width: 200px;
+  width: 250px;
   background-color:#161C5A;
   position: fixed;
   height: 100%;
@@ -99,7 +99,7 @@ text-align: center;
   color: black;
   padding: 16px;
   text-decoration: none;
-  margin-top:50px;
+  margin-top:30px;
 }
 
 .sidebar a{
@@ -162,8 +162,12 @@ div.section {
 
 .resource-form{
 color:#161C5A;
-margin-top:10px;
+margin-top:80px;
+margin-left: 200%;
 
+}
+#resource{
+  margin-left: 25%;
 }
 input[type=text]{
 width: 80%;
@@ -231,12 +235,12 @@ textarea[type=text]{
   color: white;
   font-weight: bold;
   margin:auto;
-  width:150px;
+  width:200px;
   display:block;
   align-items:center;
   justify-content:center;
   border-radius: 30px;
-  margin-left:400px;
+  margin-left:200px;
 
 }
 
@@ -281,6 +285,7 @@ text-align: left
 #cards{
 margin-top:50px;
 font-family: 'Poppins', sans-serif;
+margin-left: 10%;
 }
 #grade{
  width:120px;
