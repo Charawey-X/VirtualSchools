@@ -80,5 +80,24 @@ import * as App from './App.js';
                 App.getAttendances();
             });
         }
+
+        if (window.location.pathname.includes("teachers.html")) {
+            // Get teachers in a school
+
+            const teachersSection = document.querySelector('.teachers');
+            studentsSection.addEventListener('onload', () => {
+                App.getUserByRole("TEACHER");
+            });
+        }
+
+        if (window.location.pathname.includes("students.html")) {
+            // Get students in a school
+
+            const teachersSection = document.querySelector('.students');
+            studentsSection.addEventListener('onload', () => {
+                App.getUserByRole("STUDENT");
+            });
+        }
+
     }
 })(window, document, undefined);
