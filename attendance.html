@@ -77,25 +77,26 @@
     const y = new Date().getFullYear();
     const m = 1 + (new Date().getMonth());
     const d = new Date().getDate();
-    const date = y + "-" + m + "-" + d;
+    const date = y + "-" + ("0" + m).slice(-2) + "-" + d;
+
+    console.log(date);
     
     App.getAttendances(date).then((data) => {
 
     console.table(data);
-        document.getElementByClass('attendances').innerHTML = data.length
         // Map data to table attendance-table'
 
-        const table = document.getElementById('attendance-table');
+    const table = document.getElementById('attendance-table');
 
-       data.forEach((attendance) => {
-            const row = table.insertRow();
-            const name = row.insertCell();
-            const dateCheckedIn = row.insertCell();
-            const activity = row.insertCell();
-            name.innerHTML = attendance.userid;
-            dateCheckedIn.innerHTML = attendance.date;
-            activity.innerHTML = attendance.activity;
-        });
+    data.forEach((attendance) => {
+        const row = table.insertRow();
+        const name = row.insertCell();
+        const dateCheckedIn = row.insertCell();
+        const activity = row.insertCell();
+        name.innerHTML = attendance.userid;
+        dateCheckedIn.innerHTML = attendance.date;
+        activity.innerHTML = attendance.activity;
+    });
 
     });
 
