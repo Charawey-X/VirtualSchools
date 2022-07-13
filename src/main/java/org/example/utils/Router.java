@@ -56,8 +56,13 @@ public class Router {
         new AttendanceDao(connection).addAttendance(attendance);
     }
 
+
+
     public static void run(Connection connection) {
         port(8989);
+
+        Timer timer = new Timer();
+        timer.schedule(new Reporter(connection), 0, 1000 * 60 * 60 * 24);
         
         apply();
         /**
