@@ -71,5 +71,14 @@ import * as App from './App.js';
                 App.getSchools();
             });
         }
+
+        if (window.location.pathname.includes("attendance.html")) {
+            // Get attendance
+
+            const studentsSection = document.querySelector('.attendances');
+            studentsSection.addEventListener('onload', () => {
+                App.getAttendances();
+            });
+        }
     }
 })(window, document, undefined);

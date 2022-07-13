@@ -247,13 +247,14 @@ export const createSubject = (subject) => {
 }
 
 
-export const getAttendaces = (date) => {
+export const getAttendances = (date) => {
     checkLogin();
     //date must have a format of YYYY-MM-DD
 
     const token = localStorage.getItem('token');
+    let data;
     if (token) {
-        fetch(`${BaseUrl}/attendances/${date}/all`, {
+        data = fetch(`${BaseUrl}/attendances/${date}/all`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -261,9 +262,10 @@ export const getAttendaces = (date) => {
             method: 'GET'
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => data)
             .catch(err => console.log(err));
     }
+    return data;
 }
 
 export const getAttendace = (id, date) => {
