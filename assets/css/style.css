@@ -80,6 +80,7 @@ h5 {
   flex: 4;
   display: flex;
   justify-content: center;
+
 }
 #search {
   border: none;
@@ -89,6 +90,8 @@ h5 {
   color: #ff894f;
   width: 70%;
   border-radius: 30px;
+
+
 }
 .container .header .nav .search button {
   border: none;

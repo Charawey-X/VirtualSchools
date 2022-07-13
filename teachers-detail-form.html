@@ -64,7 +64,9 @@
                     <h6>Email:</h6>
                     <input type="text" id="email" placeholder="Email" name="fname" required>
                 </div>
-                <button class="btn btn-primary" type="submit" id="createUser">Create</button>
+                <div id="Instructor">
+                <button class="btn btn-primary" type="submit" id="createUser" onclick="addByOne()">Create</button>
+                </div>
             </form>
         </div>
     </div>
@@ -87,6 +89,25 @@
             document.getElementById('username').value = "";
             document.getElementById('email').value = "";
         });
+
+
+
+        function addByOne(e) {
+    increment.innerHTML = ++i;
+}
+
+var i = 0;
+var increment = document.getElementById('teach');
+var increase = document.getElementById('createUser');
+increase.addEventListener('click', function (e) {
+    addByOne(e);
+}, false);
+
+        
+
+
+
+
     </script>
 </body>
 
