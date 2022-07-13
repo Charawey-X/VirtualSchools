@@ -8,4 +8,11 @@
         android:title="Logout"
         app:showAsAction="never"
         tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/chat_home"
+        android:icon="@drawable/profile_menu"
+        android:title="Home"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
 </menu>

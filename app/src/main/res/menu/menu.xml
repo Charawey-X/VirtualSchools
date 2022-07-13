@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_search"
-        android:title="Search"
+        android:title="Log Out"
         android:icon="@drawable/menu"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="never"

@@ -107,6 +107,9 @@ public class MainChatActivity extends AppCompatActivity {
             startActivity(new Intent(MainChatActivity.this, ChatActivity.class));
             finish();
             return true;
+        } else if (item.getItemId()==R.id.chat_home) {
+            startActivity(new Intent(MainChatActivity.this, MainActivity.class));
+            finish();
         }
         return false;
     }
