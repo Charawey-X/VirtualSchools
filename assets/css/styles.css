@@ -210,6 +210,20 @@ textarea[type=text]{
   color:#161C5A;
   background:#E5E5E5;
 }
+.mb-3.select{
+  width: 80%;
+  padding: 9px 9px;
+  margin: 4px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  box-sizing: border-box;
+  color:#161C5A;
+  background-color:#E5E5E5;
+
+
+
+}
 
 .btn.book[type=submit]{
   cursor: pointer;
@@ -352,7 +366,7 @@ height: auto;
 
 }
 .text-body{
-    margin-top:240px;
+    margin-top:150px;
     color:#FFFFFF;
     text-align:left;
     padding-left:150px;
@@ -453,7 +467,7 @@ height: auto;
 
   }
 .section-5{
-    margin-bottom:50px;
+    margin-top:5%;
 }
 
 .section-5 .review{
