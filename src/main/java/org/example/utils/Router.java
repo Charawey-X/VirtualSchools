@@ -79,18 +79,19 @@ public class Router {
             return "OK";
         });
 
+        // Email, Password
         post("/api/v1/users/login", (req, res) -> {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
-            Users user = userDao.login(userData.getEmail());
-            System.out.println(userData.getEmail());
+            Users user = userDao.login(userData.getEmail());  //User From Db
+          
             res.type("application/json");
-            if (user != null && Hasher.verify(userData.getPassword(), user.getPassword())) {
+            if (user != null  && Hasher.verify(userData.getPassword(), user.getPassword())) {
                 String token = Hasher.createJwt(user);
                 Map<String, Object> map = new HashMap<>();
                 map.put("token", token);
                 map.put("user", user);
-                markAttendance(connection, user.getId(), "Authorization", "User Login");
+                
                 return gson.toJson(map);
             } else {
                 System.out.println("User not found");
@@ -99,28 +100,33 @@ public class Router {
             }
         });
 
+        //Email, Password, Name
+
         post("/api/v1/users/register", (req, res) -> {
             Gson gson = new Gson();
             Users userData = gson.fromJson(req.body(), Users.class);
-            String temp = "";
-            if (userData.getPassword() == null) {
-                temp = Hasher.generatePassword();
-                userData.setPassword(Hasher.hash(temp));
+            // String temp = "";
+            // if (userData.getPassword() == null) {
+            //     temp = Hasher.generatePassword();
+            //     userData.setPassword(Hasher.hash(temp));
 
-            } else {
-                userData.setPassword(Hasher.hash(userData.getPassword()));
-            }
+            // } else {
+            //     userData.setPassword(Hasher.hash(userData.getPassword()));
+            // }
+
+            userData.setRole("VIEW-EDIT-RATING,VIEW-EDIT-COMMENTS");
 
             res.type("application/json");
-            if (userDao.register(userData)) {
-                res.status(201);
-                // If user.role =="teacher" or "student"
-                if (userData.getRole().equals("TEACHER") || userData.getRole().equals("STUDENT")) {
-                    Mailer.sendMail(userData.getEmail(), "Welcome to Virtual School",
-                            "Your temporary password is: " + temp);
-                }
-                return gson.toJson(userData);
-            }
+            // if (userDao.register(userData)) {
+            //     res.status(201);
+            //     // If user.role =="teacher" or "student"
+            //     if (userData.getRole().equals("TEACHER") || userData.getRole().equals("STUDENT")) {
+            //         Mailer.sendMail(userData.getEmail(), "Welcome to Virtual School",
+            //                 "Your temporary password is: " + temp);
+            //     }
+            //     return gson.toJson(userData);
+            // }
+            userDao.register(userData);
 
             res.status(400);
             return gson.toJson("Bad Request");
@@ -465,5 +471,25 @@ public class Router {
             return gson.toJson("Bad Request");
         });
 
+        // Examplessss for Yvonne
+
+        // Protected Routes for Admins
+        post("/api/v1/doctors/:id/rating", (req, res)->{
+            Gson gson = new Gson();
+            // Bearer feghkjdsfhgkljdfhgldkfghlksfhgdklasf;j
+            String token = req.headers("Authorization").split(" ")[1];
+            DecodedJWT jwt = Hasher.decodeJwt(token);
+
+            String accessLevel = jwt.getClaim("accessLevel").asString();
+
+            if(accessLevel.contains("EDIT-RATING")){
+                // Go ahead and create rating
+
+                return null;
+            }
+            
+            return null;
+
+        });
     }
 }

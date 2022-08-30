@@ -35,7 +35,7 @@ public class Hasher {
                     .withExpiresAt(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 365)))
                     .withClaim("email", user.getEmail())
                     .withClaim("id", user.getId())
-                    .withClaim("accessLevel", user.getRole())
+                    .withClaim("accessLevel", user.getRole()) //View, View-Edit-Rate, Admin
                     .withClaim("sub", "user")
                     .sign(algorithm);
             return token;

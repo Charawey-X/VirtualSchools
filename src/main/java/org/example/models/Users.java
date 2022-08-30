@@ -7,7 +7,7 @@ public class Users {
     private String password;
     private String createdat;
     private String updatedat;
-    private String role;
+    private String role; //View, View-Edit-Rate, Edit-All, ADMIN
 
     public Users(String name, String email, String password, String created_at, String updated_at, String role) {
         this.name = name;
